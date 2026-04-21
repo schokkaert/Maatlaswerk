@@ -243,17 +243,68 @@ Bij het opnieuw opbouwen van het admingedeelte moet eerst de beveiligde workflow
       ),
       5 => 
       array (
+        'id' => 'lb-admin-security-export',
+        'rubric' => 'Admin',
+        'code' => '03.04',
+        'title' => 'Adminbeveiliging, .htaccess en lastenboekexport',
+        'content' => 'Doel: het admingedeelte moet zowel applicatief als via serverregels beschermd zijn, en het volledige lastenboek moet downloadbaar blijven als tekstbestand.
+
+Applicatieve beveiliging:
+1. Elke beheerpagina laadt `admin/bootstrap.php`.
+2. Beveiligde pagina’s roepen `maatlas_admin_require_login()` aan.
+3. Zonder actieve sessie volgt redirect naar `/admin/login.php`.
+4. Alleen actieve beheerders kunnen aanmelden.
+5. Wachtwoorden worden met `password_hash()` opgeslagen en met `password_verify()` gecontroleerd.
+6. POST-acties gebruiken CSRF-controle via `maatlas_admin_csrf_token()` en `maatlas_admin_verify_csrf()`.
+7. De eerste tijdelijke `admin/admin` login mag alleen bestaan zolang er geen echte beheerder is.
+
+Serverbeveiliging via `.htaccess`:
+1. `admin/.htaccess` zet `Options -Indexes`, zodat directory listing uit staat.
+2. `admin/.htaccess` forceert HTTPS voor alle adminrequests.
+3. `admin/.htaccess` blokkeert toegang tot `admin/storage/`.
+4. `admin/.htaccess` blokkeert directe toegang tot `admin/bootstrap.php`.
+5. `admin/.htaccess` blokkeert verborgen bestanden zoals `.htaccess`.
+6. `admin/storage/.htaccess` blokkeert alle directe webtoegang tot opslagbestanden en sessies.
+7. Deze `.htaccess`-laag is aanvullend op de PHP-login, geen vervanging ervan.
+
+Waarom geen globale Basic Auth:
+1. De adminomgeving heeft al eigen gebruikers, rollen, sessies, activatielinks en wachtwoordbeheer.
+2. Een extra Basic Auth-laag zou activatielinks en normale loginflows dubbel maken.
+3. De gekozen oplossing beschermt gevoelige bestanden server-side en laat de PHP-authenticatie het gebruikersbeheer afhandelen.
+
+TXT-export lastenboek:
+1. Het volledige lastenboek is downloadbaar via `/admin/lastenboek.php?download=txt`.
+2. De export is alleen bereikbaar na login, omdat `maatlas_admin_require_login()` eerst uitgevoerd wordt.
+3. De functie `maatlas_lastenboek_to_text()` bouwt de TXT-inhoud op.
+4. De export bevat documenttitel, website/domein, beheerder/eigenaar, technische referentie, versie, exportdatum, scope en alle hoofdstukken.
+5. De response gebruikt `Content-Type: text/plain; charset=UTF-8`.
+6. De response gebruikt `Content-Disposition: attachment`, zodat de browser het bestand downloadt.
+7. Bestandsnaamformaat: `maatlaswerk-lastenboek-YYYYMMDD-HHMMSS.txt`.
+
+Controle na wijziging:
+1. `/admin/` moet bereikbaar blijven via HTTPS.
+2. `/admin/storage/lastenboek.php` moet direct `403 Forbidden` geven.
+3. `/admin/bootstrap.php` moet direct `403 Forbidden` geven.
+4. `/admin/lastenboek.php?download=txt` moet na login een `.txt` download geven.
+5. `/admin/lastenboek.php` moet normaal blijven laden.',
+        'status' => 'concept',
+        'position' => 6,
+        'created_at' => '2026-04-21T20:45:00+02:00',
+        'updated_at' => '2026-04-21T20:45:00+02:00',
+      ),
+      6 => 
+      array (
         'id' => 'lb-template-4',
         'rubric' => 'Galerij',
         'code' => '04.01',
         'title' => 'Galerij, categorieen en dynamische inhoud',
         'content' => 'Afbeeldingen worden beheerd onder `assets/uploads` en gekoppeld aan categorieen via de admin. De publieke site leest deze metadata uit de opslagbestanden in `admin/storage/` en bouwt daaruit dynamisch albumoverzichten, detailpagina’s en willekeurige projectbeelden op.',
         'status' => 'concept',
-        'position' => 6,
+        'position' => 7,
         'created_at' => '2026-03-30T12:00:00+02:00',
         'updated_at' => '2026-03-30T12:00:00+02:00',
       ),
-      6 => 
+      7 => 
       array (
         'id' => 'lb-template-5',
         'rubric' => 'Formulieren',
@@ -261,11 +312,11 @@ Bij het opnieuw opbouwen van het admingedeelte moet eerst de beveiligde workflow
         'title' => 'Contactformulier en mailafhandeling',
         'content' => 'Het contactformulier op `/contact/` leest zijn ontvanger, afzender, testmodus en publieke contactgegevens uit de admininstellingen. In testmodus worden berichten doorgestuurd naar een testadres; in live modus naar het effectieve ontvangstadres.',
         'status' => 'concept',
-        'position' => 7,
+        'position' => 8,
         'created_at' => '2026-03-30T12:00:00+02:00',
         'updated_at' => '2026-03-30T12:00:00+02:00',
       ),
-      7 => 
+      8 => 
       array (
         'id' => 'lb-social-media',
         'rubric' => 'Sociale media',
@@ -351,11 +402,11 @@ Controle na wijziging:
 Heropbouwregel:
 Sociale media horen niet hardcoded per pagina te staan. De bron is de admininstelling, de publieke pagina’s krijgen de links via runtime settings, en de shell rendert footerlinks en floating buttons centraal.',
         'status' => 'concept',
-        'position' => 8,
+        'position' => 9,
         'created_at' => '2026-04-21T20:35:00+02:00',
         'updated_at' => '2026-04-21T20:35:00+02:00',
       ),
-      8 => 
+      9 => 
       array (
         'id' => 'lb-template-6',
         'rubric' => 'Compliance',
@@ -363,11 +414,11 @@ Sociale media horen niet hardcoded per pagina te staan. De bron is de admininste
         'title' => 'Privacy, cookies en externe diensten',
         'content' => 'De website bevat afzonderlijke pagina’s voor privacy en cookies. Externe diensten zoals Google Maps worden publiek vermeld, en de contactpagina bevat de nodige privacytoelichting en toestemmingsverwijzing conform de ingestelde sitegegevens.',
         'status' => 'concept',
-        'position' => 9,
+        'position' => 10,
         'created_at' => '2026-03-30T12:00:00+02:00',
         'updated_at' => '2026-03-30T12:00:00+02:00',
       ),
-      9 => 
+      10 => 
       array (
         'id' => 'lb-template-7',
         'rubric' => 'Publicatie',
@@ -375,7 +426,7 @@ Sociale media horen niet hardcoded per pagina te staan. De bron is de admininste
         'title' => 'Upload, publicatie en onderhoud',
         'content' => 'Wijzigingen worden lokaal uitgevoerd in `Website/` en daarna gericht geüpload naar de server. Voor onderhoud is het belangrijk dat alleen gewijzigde bestanden worden gepubliceerd en dat oude, overbodige exports of testmappen niet opnieuw worden meegezet.',
         'status' => 'concept',
-        'position' => 10,
+        'position' => 11,
         'created_at' => '2026-03-30T12:00:00+02:00',
         'updated_at' => '2026-03-30T12:00:00+02:00',
       ),

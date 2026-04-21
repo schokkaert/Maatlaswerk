@@ -10,6 +10,15 @@ $error = null;
 $editingId = isset($_GET['edit']) ? (string) $_GET['edit'] : '';
 $editingItem = $editingId !== '' ? maatlas_lastenboek_find_item($editingId) : null;
 
+if ((string) ($_GET['download'] ?? '') === 'txt') {
+	$filename = 'maatlaswerk-lastenboek-' . date('Ymd-His') . '.txt';
+	header('Content-Type: text/plain; charset=UTF-8');
+	header('Content-Disposition: attachment; filename="' . $filename . '"');
+	header('X-Content-Type-Options: nosniff');
+	echo maatlas_lastenboek_to_text($document);
+	exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$token = (string) ($_POST['csrf_token'] ?? '');
 	$action = (string) ($_POST['action'] ?? '');
@@ -87,6 +96,7 @@ maatlas_admin_render_header('Technisch lastenboek', $currentAdmin);
 		<p class="maatlas-admin-eyebrow">Document</p>
 		<h2>Technische documentatie</h2>
 		<p>Hier beheer je het technisch lastenboek van de website zelf: opbouw, modules, galerij, formulieren, instellingen en publicatie. Je kan hieronder ook een basisdocument voor de website laden.</p>
+		<p><a class="maatlas-admin-button maatlas-admin-button-secondary" href="/admin/lastenboek.php?download=txt">Download volledig lastenboek als TXT</a></p>
 		<form method="post" class="maatlas-admin-form">
 			<input type="hidden" name="csrf_token" value="<?= maatlas_admin_h(maatlas_admin_csrf_token()); ?>">
 			<input type="hidden" name="action" value="save_meta">
