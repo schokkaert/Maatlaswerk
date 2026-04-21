@@ -1608,16 +1608,13 @@ function maatlas_admin_render_public_shell_footer(): void
 		<div class="maatlas-shell-footer-copy">
 			<strong>W&amp;S Maatlaswerk</strong>
 			<p>Maatwerk in staal, inox, aluminium en glas voor particuliere en professionele projecten.</p>
-			<p>Voor de gebruikte materialen werken we met <a href="https://www.forstersystems.be" target="_blank" rel="noopener noreferrer">Forster Systems</a> via <a href="https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken" target="_blank" rel="noopener noreferrer">WS Maatlaswerken</a>.</p>
+			<p class="maatlas-shell-footer-materials">Materialen met profielen van <a href="https://www.forstersystems.be" target="_blank" rel="noopener noreferrer">Forster Systems</a>. <a href="https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken" target="_blank" rel="noopener noreferrer">Bekijk onze dealerfiche</a>.</p>
 			<?php if ($vatNumber !== ''): ?>
 			<p>BTW: <?= maatlas_admin_h($vatNumber); ?></p>
 			<?php endif; ?>
 			<div class="maatlas-shell-footer-legal">
 				<a class="maatlas-shell-legal-link" href="/privacy/">Privacyverklaring</a>
 				<a class="maatlas-shell-legal-link" href="/cookies/">Cookiebeleid</a>
-				<a class="maatlas-shell-legal-link" href="https://www.forstersystems.be" target="_blank" rel="noopener noreferrer">Forster Systems</a>
-				<a class="maatlas-shell-legal-link" href="https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken" target="_blank" rel="noopener noreferrer">Dealerpagina</a>
-				<a class="maatlas-shell-legal-link" href="/admin/">Admin</a>
 			</div>
 		</div>
 		<nav class="maatlas-shell-footer-nav" aria-label="Footer navigatie">
@@ -1629,6 +1626,7 @@ function maatlas_admin_render_public_shell_footer(): void
 			<a class="maatlas-shell-social" href="https://www.facebook.com/p/WS-Maatlaswerk-100054239330706/" rel="noopener noreferrer">Facebook</a>
 			<a class="maatlas-shell-social" href="https://www.instagram.com/w_s_maatlaswerk/" rel="noopener noreferrer">Instagram</a>
 		</div>
+		<a class="maatlas-shell-footer-admin" href="/admin/">Admin</a>
 	</div>
 </div>
 	<?php
@@ -1658,7 +1656,7 @@ function maatlas_admin_render_header(string $title, ?array $currentAdmin = null)
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?= maatlas_admin_h($title); ?> | Admin | W&amp;S Maatlaswerk</title>
-	<link rel="stylesheet" href="/assets/themes/bluehost-blueprint/style.css?ver=2.0.1">
+	<link rel="stylesheet" href="/assets/themes/bluehost-blueprint/style.css?ver=2.0.4">
 	<link rel="stylesheet" href="/admin/style.css?v=20260331-1">
 	<?php maatlas_site_render_theme_style(); ?>
 	<?php if (!empty($GLOBALS['maatlas_admin_extra_head'])): ?>

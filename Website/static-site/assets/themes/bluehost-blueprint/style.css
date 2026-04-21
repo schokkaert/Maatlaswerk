@@ -906,6 +906,11 @@ a {
 	padding: 12px 22px;
 }
 
+.maatlas-shell-footer-inner {
+	position: relative;
+	padding-bottom: 34px;
+}
+
 .maatlas-shell-brand {
 	display: inline-flex;
 	align-items: center;
@@ -955,6 +960,18 @@ a {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
+}
+
+.maatlas-shell-footer-materials {
+	font-size: 0.95rem;
+}
+
+.maatlas-shell-footer-materials a {
+	color: #111111;
+	font-weight: 800;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.18em;
 }
 
 .maatlas-shell-legal-link {
@@ -1042,6 +1059,25 @@ a {
 	margin-bottom: 8px;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
+}
+
+.maatlas-shell-footer-admin {
+	position: absolute;
+	right: 22px;
+	bottom: 12px;
+	color: rgba(17, 17, 17, 0.52);
+	font-size: 0.82rem;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-decoration: none;
+	text-transform: none;
+}
+
+.maatlas-shell-footer-admin:hover,
+.maatlas-shell-footer-admin:focus {
+	color: #111111;
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
 }
 
 .maatlas-floating-socials {
@@ -1453,6 +1489,15 @@ body.maatlas-lightbox-open .maatlas-legal-notice {
 		flex-direction: column;
 		align-items: flex-start;
 		padding: 14px 18px;
+	}
+
+	.maatlas-shell-footer-inner {
+		padding-bottom: 36px;
+	}
+
+	.maatlas-shell-footer-admin {
+		right: 18px;
+		bottom: 12px;
 	}
 
 	.maatlas-shell-brand-logo {
