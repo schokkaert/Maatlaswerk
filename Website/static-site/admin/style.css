@@ -1,0 +1,1418 @@
+body {
+	margin: 0;
+	font-family: "Ubuntu Sans", Arial, sans-serif;
+	background: linear-gradient(180deg, #f6f6f6 0%, #dfdfdf 100%);
+	color: #111111;
+}
+
+a {
+	color: inherit;
+}
+
+.maatlas-admin-shell {
+	width: min(1280px, calc(100% - 40px));
+	margin: 24px auto;
+}
+
+.maatlas-admin-shell-layout {
+	display: grid;
+	grid-template-columns: 248px minmax(0, 1fr);
+	gap: 20px;
+	align-items: start;
+}
+
+.maatlas-admin-floating-status {
+	position: fixed;
+	top: 16px;
+	left: 16px;
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 12px 14px;
+	border-radius: 18px;
+	background: #a31212;
+	color: #ffffff;
+	box-shadow: 0 18px 38px rgba(0, 0, 0, 0.18);
+}
+
+.maatlas-admin-floating-status-copy {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.maatlas-admin-floating-status strong {
+	font-size: 0.88rem;
+}
+
+.maatlas-admin-floating-status span {
+	font-size: 0.78rem;
+	line-height: 1.35;
+}
+
+.maatlas-admin-floating-status a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 14px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.18);
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.maatlas-admin-header,
+.maatlas-admin-page-header,
+.maatlas-admin-sidebar-card,
+.maatlas-admin-card,
+.maatlas-admin-auth-card {
+	background: rgba(255, 255, 255, 0.94);
+	border: 1px solid rgba(17, 17, 17, 0.1);
+	border-radius: 28px;
+	box-shadow: 0 18px 42px rgba(0, 0, 0, 0.08);
+}
+
+.maatlas-admin-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 24px;
+	padding: 28px 32px;
+}
+
+.maatlas-admin-page-header {
+	padding: 28px 32px;
+}
+
+.maatlas-admin-header h1,
+.maatlas-admin-page-header h1,
+.maatlas-admin-card h2,
+.maatlas-admin-auth-card h2 {
+	margin: 0;
+	font-size: clamp(1.8rem, 3vw, 2.8rem);
+}
+
+.maatlas-admin-eyebrow {
+	margin: 0 0 10px;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #595959;
+}
+
+.maatlas-admin-header-side {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	align-items: flex-end;
+}
+
+.maatlas-admin-sidebar {
+	position: sticky;
+	top: 92px;
+}
+
+.maatlas-admin-sidebar-card {
+	display: grid;
+	gap: 14px;
+	padding: 18px;
+}
+
+.maatlas-admin-sidebar-card h2 {
+	margin: 0;
+	font-size: 1.34rem;
+}
+
+.maatlas-admin-sidebar-copy {
+	margin: 0;
+	color: #5f5f5f;
+	line-height: 1.55;
+	font-size: 0.96rem;
+}
+
+.maatlas-admin-sidebar-user {
+	text-align: left;
+	align-items: flex-start;
+	padding: 12px 14px;
+	border-radius: 16px;
+	background: #f5f5f5;
+}
+
+.maatlas-admin-sidebar-nav {
+	display: grid;
+	gap: 8px;
+}
+
+.maatlas-admin-sidebar-nav-item {
+	display: grid;
+	gap: 6px;
+}
+
+.maatlas-admin-sidebar-nav a,
+.maatlas-admin-sidebar-toggle,
+.maatlas-admin-sidebar-logout {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 10px 12px;
+	border-radius: 14px;
+	border: 1px solid rgba(17, 17, 17, 0.12);
+	background: #f3f3f3;
+	color: #111111;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 0.96rem;
+}
+
+.maatlas-admin-sidebar-nav a.is-current,
+.maatlas-admin-sidebar-toggle.is-current {
+	background: var(--maatlas-brand-accent);
+	color: #111111;
+	border-color: rgba(17, 17, 17, 0.14);
+}
+
+.maatlas-admin-sidebar-toggle {
+	width: 100%;
+	font: inherit;
+	cursor: pointer;
+}
+
+.maatlas-admin-sidebar-toggle span:first-child {
+	flex: 1;
+	text-align: left;
+}
+
+.maatlas-admin-sidebar-toggle-icon {
+	width: 9px;
+	height: 9px;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: rotate(45deg);
+	transition: transform 0.2s ease;
+	margin-left: 10px;
+}
+
+.maatlas-admin-sidebar-toggle[aria-expanded="false"] .maatlas-admin-sidebar-toggle-icon {
+	transform: rotate(-45deg);
+}
+
+.maatlas-admin-sidebar-submenu {
+	display: grid;
+	gap: 6px;
+	padding-left: 12px;
+}
+
+.maatlas-admin-sidebar-submenu.is-collapsed {
+	display: none;
+}
+
+.maatlas-admin-sidebar-submenu a {
+	padding: 8px 10px;
+	border-radius: 10px;
+	background: #ececec;
+	font-size: 0.88rem;
+	font-weight: 600;
+}
+
+.maatlas-admin-sidebar-submenu a.is-current {
+	background: rgba(176, 205, 86, 0.42);
+	color: #111111;
+	border-color: rgba(17, 17, 17, 0.12);
+}
+
+.maatlas-admin-sidebar-logout {
+	background: #a31212;
+	color: #ffffff;
+	border-color: rgba(163, 18, 18, 0.25);
+}
+
+.maatlas-admin-content {
+	min-width: 0;
+}
+
+.maatlas-admin-current-user {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	text-align: right;
+}
+
+.maatlas-admin-current-user span {
+	color: #5a5a5a;
+	text-transform: uppercase;
+	font-size: 0.8rem;
+	letter-spacing: 0.08em;
+}
+
+.maatlas-admin-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.maatlas-admin-nav a,
+.maatlas-admin-button,
+.maatlas-admin-table-actions a,
+.maatlas-admin-table-actions button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 12px 18px;
+	border-radius: 999px;
+	border: 1px solid rgba(17, 17, 17, 0.14);
+	background: #111111;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.maatlas-admin-button-secondary,
+.maatlas-admin-table-actions a {
+	background: #f0f0f0;
+	color: #111111;
+}
+
+.maatlas-admin-main {
+	margin-top: 24px;
+}
+
+.maatlas-admin-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 24px;
+}
+
+.maatlas-admin-grid-wide {
+	grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+}
+
+.maatlas-admin-gallery-top {
+	grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1fr);
+	align-items: start;
+}
+
+.maatlas-admin-panel-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 24px;
+	align-items: start;
+}
+
+.maatlas-admin-panel-menu {
+	display: none;
+}
+
+.maatlas-admin-panel-menu-hidden {
+	display: none !important;
+}
+
+.maatlas-admin-panel-menu-card {
+	padding: 18px;
+	border-radius: 22px;
+	background: rgba(255, 255, 255, 0.94);
+	border: 1px solid rgba(17, 17, 17, 0.1);
+	box-shadow: 0 18px 42px rgba(0, 0, 0, 0.08);
+}
+
+.maatlas-admin-panel-nav {
+	display: grid;
+	gap: 8px;
+}
+
+.maatlas-admin-panel-nav button {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 10px 12px;
+	border-radius: 12px;
+	border: 1px solid rgba(17, 17, 17, 0.12);
+	background: #f3f3f3;
+	color: #111111;
+	font: inherit;
+	font-weight: 700;
+	font-size: 0.94rem;
+	cursor: pointer;
+}
+
+.maatlas-admin-panel-nav button.is-current {
+	background: #111111;
+	color: #ffffff;
+}
+
+.maatlas-admin-panel-content {
+	min-width: 0;
+}
+
+.maatlas-admin-section-panel {
+	display: block;
+}
+
+.maatlas-admin-section-hidden {
+	display: none;
+}
+
+.maatlas-admin-card,
+.maatlas-admin-auth-card {
+	padding: 20px;
+	min-width: 0;
+}
+
+.maatlas-admin-card-span-2 {
+	grid-column: 1 / -1;
+}
+
+.maatlas-admin-card p,
+.maatlas-admin-auth-card p {
+	line-height: 1.75;
+	overflow-wrap: anywhere;
+}
+
+.maatlas-admin-card h2 {
+	font-size: clamp(1.45rem, 2.1vw, 2.05rem);
+	line-height: 1.08;
+	overflow-wrap: anywhere;
+}
+
+.maatlas-admin-auth-card {
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+.maatlas-admin-form {
+	display: grid;
+	gap: 10px;
+}
+
+.maatlas-admin-form label {
+	display: grid;
+	gap: 5px;
+	font-weight: 700;
+	min-width: 0;
+}
+
+.maatlas-admin-form input,
+.maatlas-admin-form select,
+.maatlas-admin-form textarea {
+	width: 100%;
+	max-width: 100%;
+	padding: 8px 12px;
+	border: 1px solid rgba(17, 17, 17, 0.16);
+	border-radius: 10px;
+	background: #ffffff;
+	font: inherit;
+	min-height: 38px;
+	box-sizing: border-box;
+}
+
+.maatlas-admin-form textarea {
+	resize: vertical;
+	min-height: 80px;
+}
+
+.maatlas-admin-password-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 10px;
+	align-items: center;
+}
+
+.maatlas-admin-toggle-password {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 12px;
+	border: 1px solid rgba(17, 17, 17, 0.14);
+	border-radius: 12px;
+	background: #f2f2f2;
+	color: #111111;
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.maatlas-admin-checkbox {
+	display: flex !important;
+	align-items: center;
+	gap: 10px;
+}
+
+.maatlas-admin-checkbox input {
+	width: auto;
+}
+
+.maatlas-admin-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.maatlas-admin-inline-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.maatlas-admin-position-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 10px;
+	max-width: 172px;
+}
+
+.maatlas-admin-position-option {
+	display: flex !important;
+	align-items: stretch;
+	justify-content: stretch;
+	margin: 0;
+	position: relative;
+}
+
+.maatlas-admin-position-option input {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.maatlas-admin-position-option span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+	padding: 0;
+	border: 1px solid rgba(17, 17, 17, 0.12);
+	border-radius: 12px;
+	background: #f4f4f4;
+	position: relative;
+	transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.maatlas-admin-position-option span::before {
+	content: "";
+	width: 10px;
+	height: 10px;
+	border-radius: 999px;
+	background: rgba(17, 17, 17, 0.18);
+}
+
+.maatlas-admin-position-option input:checked + span {
+	background: var(--maatlas-brand-accent);
+	border-color: rgba(17, 17, 17, 0.16);
+	transform: scale(1.04);
+}
+
+.maatlas-admin-position-option input:checked + span::before {
+	background: #111111;
+}
+
+.maatlas-admin-alert {
+	margin: 0 0 20px;
+	padding: 14px 16px;
+	border-radius: 18px;
+	font-weight: 700;
+}
+
+.maatlas-admin-alert-success {
+	background: rgba(17, 17, 17, 0.08);
+}
+
+.maatlas-admin-alert-error {
+	background: rgba(180, 0, 0, 0.12);
+	color: #7a0000;
+}
+
+.maatlas-admin-table-wrap {
+	overflow-x: auto;
+}
+
+.maatlas-admin-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.maatlas-admin-table th,
+.maatlas-admin-table td {
+	padding: 14px 10px;
+	border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+	text-align: left;
+	vertical-align: top;
+}
+
+.maatlas-admin-table th {
+	font-size: 0.78rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #5f5f5f;
+}
+
+.maatlas-admin-table-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.maatlas-admin-table-actions form {
+	margin: 0;
+}
+
+.maatlas-admin-help {
+	margin: 0;
+	color: #606060;
+	font-size: 0.94rem;
+	line-height: 1.45;
+}
+
+.maatlas-admin-fieldset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: grid;
+	gap: 6px;
+}
+
+.maatlas-admin-fieldset legend {
+	padding: 0;
+	font-weight: 700;
+	margin-bottom: 0;
+}
+
+.maatlas-admin-check-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 6px;
+}
+
+.maatlas-admin-check-option {
+	display: flex !important;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 10px;
+	border-radius: 12px;
+	background: #f4f4f4;
+	font-weight: 600 !important;
+	line-height: 1.25;
+}
+
+.maatlas-admin-check-option input {
+	width: auto;
+	margin: 0;
+}
+
+.maatlas-gallery-upload-preview {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.maatlas-gallery-preview-card {
+	display: grid;
+	gap: 12px;
+	padding: 14px;
+	border-radius: 20px;
+	background: #f5f5f5;
+	border: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.maatlas-gallery-preview-card img {
+	width: 100%;
+	height: 220px;
+	object-fit: contain;
+	border-radius: 18px;
+	background: #ffffff;
+	transition: transform 0.2s ease;
+}
+
+.maatlas-gallery-preview-actions {
+	display: flex;
+	gap: 10px;
+}
+
+.maatlas-gallery-preview-actions button,
+.maatlas-admin-compact-form button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 14px;
+	border-radius: 999px;
+	border: 1px solid rgba(17, 17, 17, 0.14);
+	background: #111111;
+	color: #ffffff;
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.maatlas-admin-inline-form {
+	margin-bottom: 18px;
+}
+
+.maatlas-admin-list {
+	display: grid;
+	gap: 12px;
+}
+
+.maatlas-admin-list-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 12px 14px;
+	border-radius: 18px;
+	background: #f6f6f6;
+}
+
+.maatlas-admin-list-row > div:first-child {
+	display: grid;
+	gap: 6px;
+}
+
+.maatlas-admin-list-row span {
+	color: #666666;
+}
+
+.maatlas-admin-category-text {
+	margin: 4px 0 0;
+	color: #555555;
+	line-height: 1.6;
+}
+
+.maatlas-admin-list-actions {
+	display: grid;
+	gap: 10px;
+	min-width: 300px;
+}
+
+.maatlas-admin-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px 12px;
+	border-radius: 999px;
+	background: #f0f0f0;
+	color: #111111;
+	font-size: 0.82rem;
+	font-weight: 700;
+}
+
+.maatlas-admin-spec-row {
+	align-items: start;
+}
+
+.maatlas-mobile-upload-form {
+	gap: 18px;
+	min-width: 0;
+}
+
+.maatlas-mobile-upload-form > * {
+	min-width: 0;
+}
+
+.maatlas-mobile-upload-preview {
+	min-height: 220px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 14px;
+	border-radius: 22px;
+	border: 1px dashed rgba(17, 17, 17, 0.2);
+	background: #f7f7f7;
+	overflow: hidden;
+}
+
+.maatlas-mobile-upload-preview.is-empty {
+	display: none;
+}
+
+.maatlas-mobile-upload-preview img {
+	display: block;
+	max-width: 100%;
+	max-height: 360px;
+	border-radius: 18px;
+	object-fit: contain;
+}
+
+.maatlas-mobile-upload-picker {
+	display: grid;
+	justify-items: center;
+}
+
+.maatlas-mobile-upload-picker.is-hidden {
+	display: none;
+}
+
+.maatlas-mobile-upload-picker-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	text-decoration: none;
+}
+
+.maatlas-mobile-upload-form input[type="text"]::placeholder {
+	color: #8b8b8b;
+	font-size: 0.92rem;
+}
+
+.maatlas-mobile-upload-input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.maatlas-mobile-upload-picker-icon,
+.maatlas-mobile-upload-placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 116px;
+	height: 116px;
+	min-height: 116px;
+	border-radius: 999px;
+	background: #b0cd56;
+	border: 1px solid rgba(17, 17, 17, 0.1);
+	box-shadow: 0 16px 34px rgba(176, 205, 86, 0.28);
+	cursor: pointer;
+}
+
+.maatlas-mobile-upload-picker-button:hover .maatlas-mobile-upload-picker-icon,
+.maatlas-mobile-upload-picker-button:focus-visible .maatlas-mobile-upload-picker-icon {
+	background: #a6c24f;
+	border-color: rgba(17, 17, 17, 0.14);
+}
+
+.maatlas-mobile-upload-picker-icon svg,
+.maatlas-mobile-upload-placeholder svg {
+	width: 48px;
+	height: 48px;
+	stroke: #ffffff;
+	stroke-width: 1.6;
+	fill: none;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.maatlas-mobile-upload-status,
+.maatlas-mobile-upload-result {
+	padding: 14px 16px;
+	border-radius: 18px;
+	background: #f2f2f2;
+	line-height: 1.2;
+}
+
+.maatlas-mobile-upload-status.is-success {
+	background: rgba(176, 205, 86, 0.18);
+}
+
+.maatlas-mobile-upload-status.is-error {
+	background: rgba(163, 18, 18, 0.12);
+	color: #7a0000;
+}
+
+.maatlas-mobile-upload-location-title {
+	font-weight: 700;
+}
+
+.maatlas-mobile-upload-location-line {
+	margin-top: 6px;
+	font-size: 0.95rem;
+	line-height: 1.2;
+}
+
+.maatlas-mobile-upload-result p {
+	margin: 6px 0 0;
+}
+
+.maatlas-mobile-upload-page {
+	min-height: 100vh;
+	background: linear-gradient(180deg, #f6f6f6 0%, #dfdfdf 100%);
+}
+
+.maatlas-mobile-simple-shell {
+	width: min(100%, 560px);
+	margin: 0 auto;
+	padding: 12px 12px 20px;
+}
+
+.maatlas-mobile-simple-topbar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-bottom: 10px;
+}
+
+.maatlas-mobile-simple-topbar a {
+	color: #111111;
+	text-decoration: none;
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.maatlas-mobile-simple-card {
+	background: rgba(255, 255, 255, 0.94);
+	border: 1px solid rgba(17, 17, 17, 0.1);
+	border-radius: 24px;
+	box-shadow: 0 18px 42px rgba(0, 0, 0, 0.08);
+	padding: 18px;
+}
+
+.maatlas-mobile-simple-logo {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 8px;
+}
+
+.maatlas-mobile-simple-logo img {
+	display: block;
+	width: 88px;
+	height: auto;
+}
+
+.maatlas-mobile-simple-title {
+	margin: 0 0 8px;
+	font-size: clamp(1.9rem, 7vw, 2.5rem);
+	line-height: 1.02;
+}
+
+.maatlas-mobile-simple-copy {
+	margin: 0 0 12px;
+	color: #2f2f2f;
+	line-height: 1.1;
+}
+
+.maatlas-admin-simple-list {
+	margin: 0;
+	padding-left: 1.2rem;
+	line-height: 1.8;
+}
+
+.maatlas-mobile-upload-access {
+	display: grid;
+	grid-template-columns: 140px minmax(0, 1fr);
+	gap: 18px;
+	align-items: center;
+	margin-top: 18px;
+	padding: 16px;
+	border-radius: 20px;
+	background: #f5f5f5;
+}
+
+.maatlas-mobile-upload-access img {
+	display: block;
+	width: 140px;
+	height: 140px;
+	border-radius: 16px;
+	background: #ffffff;
+}
+
+.maatlas-mobile-upload-access p {
+	margin: 0;
+}
+
+.maatlas-mobile-install-box {
+	margin-top: 18px;
+	padding: 16px;
+	border-radius: 20px;
+	background: #f5f5f5;
+}
+
+.maatlas-mobile-install-box p {
+	margin: 0 0 10px;
+}
+
+.maatlas-mobile-install-qr {
+	display: grid;
+	grid-template-columns: 120px minmax(0, 1fr);
+	gap: 16px;
+	align-items: center;
+	margin: 14px 0 16px;
+	padding: 14px;
+	border-radius: 18px;
+	background: #ffffff;
+}
+
+.maatlas-mobile-install-qr img {
+	display: block;
+	width: 120px;
+	height: 120px;
+	border-radius: 12px;
+	background: #ffffff;
+}
+
+.maatlas-mobile-install-qr p:last-child {
+	margin-bottom: 0;
+}
+
+.maatlas-admin-template-form {
+	margin-top: 18px;
+}
+
+.maatlas-admin-compact-form {
+	display: flex;
+	gap: 8px;
+	margin: 0;
+}
+
+.maatlas-admin-compact-form input {
+	flex: 1;
+	padding: 8px 12px;
+	border: 1px solid rgba(17, 17, 17, 0.16);
+	border-radius: 12px;
+	background: #ffffff;
+	font: inherit;
+}
+
+.maatlas-admin-category-edit-form {
+	gap: 8px;
+}
+
+.maatlas-admin-list-button-row {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.maatlas-admin-list-inline-action {
+	margin: 0;
+}
+
+.maatlas-admin-list-button-row .maatlas-admin-button,
+.maatlas-admin-list-inline-action .maatlas-admin-button {
+	width: 100%;
+}
+
+.maatlas-admin-button-icon {
+	gap: 10px;
+	color: #ffffff !important;
+}
+
+.maatlas-admin-button-icon svg {
+	width: 16px;
+	height: 16px;
+	display: block;
+	flex: 0 0 auto;
+	stroke: currentColor;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.maatlas-admin-button-icon span,
+.maatlas-admin-button-icon svg {
+	color: #ffffff !important;
+	stroke: #ffffff;
+}
+
+.maatlas-admin-library-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+	flex-wrap: wrap;
+	gap: 18px;
+	margin-bottom: 20px;
+}
+
+.maatlas-admin-library-header > div {
+	flex: 1 1 280px;
+	min-width: 240px;
+}
+
+.maatlas-admin-library-header h2 {
+	overflow-wrap: normal;
+	word-break: normal;
+	hyphens: none;
+}
+
+.maatlas-admin-filter-form {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	align-items: end;
+	flex: 1 1 460px;
+	justify-content: flex-end;
+}
+
+.maatlas-admin-filter-form label {
+	display: grid;
+	gap: 8px;
+	font-weight: 700;
+	min-width: 220px;
+}
+
+.maatlas-admin-filter-form select {
+	padding: 10px 12px;
+	border-radius: 12px;
+	border: 1px solid rgba(17, 17, 17, 0.16);
+	font: inherit;
+	background: #ffffff;
+}
+
+.maatlas-admin-media-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 20px;
+}
+
+.maatlas-admin-media-card {
+	display: grid;
+	grid-template-columns: 280px minmax(0, 1fr);
+	align-items: start;
+	overflow: hidden;
+	border: 1px solid rgba(17, 17, 17, 0.1);
+	border-radius: 24px;
+	background: #fafafa;
+}
+
+.maatlas-admin-media-side {
+	display: grid;
+	gap: 10px;
+	padding: 14px;
+	border-right: 1px solid rgba(17, 17, 17, 0.08);
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 240, 240, 0.98) 100%);
+}
+
+.maatlas-admin-media-thumb {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	min-height: 0;
+	background: transparent;
+	border-right: 0;
+}
+
+.maatlas-admin-media-thumb img {
+	width: 100%;
+	max-width: 100%;
+	height: 220px;
+	object-fit: contain;
+	object-position: center;
+	background: #ffffff;
+	border-radius: 18px;
+	box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.08);
+}
+
+.maatlas-admin-media-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 10px;
+	font-size: 0.88rem;
+	font-weight: 700;
+	color: #4f4f4f;
+	line-height: 1.2;
+}
+
+.maatlas-admin-media-meta a {
+	color: #111111;
+	text-decoration: none;
+}
+
+.maatlas-admin-media-meta a:hover,
+.maatlas-admin-media-meta a:focus-visible {
+	text-decoration: underline;
+}
+
+.maatlas-admin-media-move-form {
+	margin-top: 14px;
+	padding-top: 14px;
+	border-top: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.maatlas-admin-media-move-form label {
+	display: grid;
+	gap: 8px;
+	font-weight: 700;
+}
+
+.maatlas-admin-media-move-form select {
+	padding: 10px 12px;
+	border-radius: 12px;
+	border: 1px solid rgba(17, 17, 17, 0.16);
+	font: inherit;
+	background: #ffffff;
+}
+
+.maatlas-admin-media-replace-form {
+	margin-top: 0;
+	padding-top: 10px;
+	border-top: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.maatlas-admin-media-replace-form label {
+	display: grid;
+	gap: 8px;
+	font-weight: 700;
+}
+
+.maatlas-admin-media-replace-form input[type="file"] {
+	padding: 10px 12px;
+	border-radius: 12px;
+	border: 1px solid rgba(17, 17, 17, 0.16);
+	background: #ffffff;
+	font: inherit;
+}
+
+.maatlas-admin-media-topbar {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+}
+
+.maatlas-admin-media-delete-form {
+	display: flex;
+	justify-content: flex-end;
+	margin: 0;
+}
+
+.maatlas-admin-media-delete-button {
+	appearance: none;
+	-webkit-appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	min-width: 42px;
+	height: 42px;
+	padding: 0;
+	border: 1px solid rgba(138, 17, 17, 0.18);
+	border-radius: 999px;
+	background: #8a1111;
+	color: #ffffff;
+	cursor: pointer;
+	box-shadow: 0 10px 24px rgba(138, 17, 17, 0.2);
+	line-height: 0;
+}
+
+.maatlas-admin-media-delete-button:hover {
+	background: #741010;
+}
+
+.maatlas-admin-media-delete-button svg {
+	width: 20px;
+	height: 20px;
+	display: block;
+	stroke: currentColor;
+	stroke-width: 1.9;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	fill: none;
+}
+
+.maatlas-admin-media-body {
+	display: grid;
+	gap: 10px;
+	padding: 14px;
+	align-content: start;
+}
+
+.maatlas-admin-media-body p {
+	margin: 0;
+	color: #5f5f5f;
+	word-break: break-word;
+}
+
+.maatlas-admin-usage-list {
+	display: grid;
+	gap: 10px;
+	padding: 14px 16px;
+	border-radius: 18px;
+	background: #f2f2f2;
+	border: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.maatlas-admin-usage-title {
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #5c5c5c;
+}
+
+.maatlas-admin-usage-list ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	gap: 8px;
+}
+
+.maatlas-admin-usage-summary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.maatlas-admin-usage-list li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.maatlas-admin-usage-list a {
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.maatlas-admin-usage-list a:hover {
+	text-decoration: underline;
+}
+
+.maatlas-admin-usage-empty {
+	margin: 0;
+	color: #676767;
+}
+
+.maatlas-admin-usage-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px 8px;
+	border-radius: 999px;
+	background: #dfdfdf;
+	color: #3f3f3f;
+	font-size: 0.74rem;
+	font-weight: 700;
+}
+
+.maatlas-admin-usage-badge-linked {
+	background: #d9efe0;
+	color: #1f5b34;
+}
+
+.maatlas-admin-usage-badge-random {
+	background: #ece4d7;
+	color: #6b4b16;
+}
+
+.maatlas-admin-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.maatlas-admin-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 8px 12px;
+	border-radius: 999px;
+	background: #111111;
+	color: #ffffff;
+	font-size: 0.76rem;
+	font-weight: 800;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+.maatlas-admin-tag-muted {
+	background: #ececec;
+	color: #505050;
+}
+
+.maatlas-admin-media-form {
+	gap: 12px;
+}
+
+.maatlas-admin-button-danger {
+	background: #8a1111;
+	color: #ffffff;
+}
+
+.maatlas-admin-list-actions .maatlas-admin-button {
+	padding: 10px 14px;
+}
+
+@media (max-width: 980px) {
+	.maatlas-admin-grid,
+	.maatlas-admin-grid-wide,
+	.maatlas-admin-gallery-top,
+	.maatlas-admin-media-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-admin-shell-layout {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-admin-panel-layout {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-admin-header {
+		flex-direction: column;
+	}
+
+	.maatlas-admin-header-side,
+	.maatlas-admin-current-user {
+		align-items: flex-start;
+		text-align: left;
+	}
+
+	.maatlas-admin-library-header,
+	.maatlas-admin-list-row,
+	.maatlas-admin-list-actions,
+	.maatlas-admin-compact-form {
+		flex-direction: column;
+	}
+
+	.maatlas-admin-media-card {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-admin-media-side {
+		border-right: 0;
+		border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+	}
+
+	.maatlas-admin-media-thumb {
+		border-bottom: 0;
+	}
+
+	.maatlas-admin-media-body {
+		padding-top: 14px;
+	}
+
+	.maatlas-admin-sidebar {
+		position: static;
+		top: auto;
+	}
+
+	.maatlas-admin-panel-menu {
+		position: static;
+		top: auto;
+	}
+
+	.maatlas-admin-check-grid,
+	.maatlas-gallery-upload-preview,
+	.maatlas-admin-inline-grid,
+	.maatlas-admin-position-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-admin-shell {
+		margin-top: 16px;
+	}
+
+	.maatlas-admin-floating-status {
+		right: 16px;
+		left: 16px;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.maatlas-admin-password-row {
+		grid-template-columns: 1fr;
+	}
+}

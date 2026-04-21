@@ -1,0 +1,9 @@
+.vscode/
+/*.png
+/.DS_Store
+Website/_import/
+Website/static-site/admin/storage/sessions/
+Website/index.html.backup.*
+Website/matlas01_bcig1.sql
+Website/testUpload.txt
+Website/upload.json

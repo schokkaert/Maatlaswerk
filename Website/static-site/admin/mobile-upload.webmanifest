@@ -1,0 +1,22 @@
+{
+  "name": "W&S Maatlaswerk Mobiele Upload",
+  "short_name": "Upload",
+  "description": "Snelle smartphone-upload voor galerijfoto's van W&S Maatlaswerk.",
+  "start_url": "/admin/mobile-upload.php",
+  "scope": "/admin/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#B0CD56",
+  "icons": [
+    {
+      "src": "/assets/uploads/static/MaatLasWerk-13.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/assets/uploads/static/MaatLasWerk-13-150x150.jpg",
+      "sizes": "150x150",
+      "type": "image/jpeg"
+    }
+  ]
+}

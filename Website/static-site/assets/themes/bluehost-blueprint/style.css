@@ -1,0 +1,1494 @@
+@font-face {
+	font-family: "Ubuntu Sans";
+	font-style: normal;
+	font-weight: 100 800;
+	font-display: swap;
+	src: url("./assets/fonts/ubuntu-sans/ubuntu-sans-variable.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Ubuntu Sans";
+	font-style: italic;
+	font-weight: 100 800;
+	font-display: swap;
+	src: url("./assets/fonts/ubuntu-sans/ubuntu-sans-italic-variable.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Playfair Display";
+	font-style: normal;
+	font-weight: 400 900;
+	font-display: swap;
+	src: url("./assets/fonts/playfair-display/playfair-display-variable.woff2") format("woff2");
+}
+
+:root {
+	--maatlas-bg: #e6e6e6;
+	--maatlas-surface: rgba(255, 255, 255, 0.95);
+	--maatlas-surface-strong: #ffffff;
+	--maatlas-steel: #111111;
+	--maatlas-steel-soft: #4f4f4f;
+	--maatlas-accent: #000000;
+	--maatlas-brand-accent: #B0CD56;
+	--maatlas-border: rgba(17, 17, 17, 0.14);
+	--maatlas-shadow: 0 18px 42px rgba(0, 0, 0, 0.08);
+	--maatlas-radius: 28px;
+	--maatlas-content: 1220px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: "Ubuntu Sans", sans-serif;
+	background:
+		radial-gradient(circle at top right, rgba(0, 0, 0, 0.08), transparent 28rem),
+		linear-gradient(180deg, #ffffff 0%, var(--maatlas-bg) 100%);
+	color: var(--maatlas-steel);
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+a {
+	color: inherit;
+}
+
+.site-site-blocks {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.site-site-blocks > main {
+	flex: 1;
+}
+
+.maatlas-main {
+	width: min(var(--maatlas-content), calc(100% - 48px));
+	margin: 0 auto;
+	padding: 0 0 56px;
+}
+
+.maatlas-page-section {
+	margin-top: 18px;
+}
+
+.maatlas-main > .maatlas-page-section:first-child {
+	margin-top: 4px;
+}
+
+.maatlas-card,
+.maatlas-panel,
+.maatlas-cta-band,
+.maatlas-hero-copy,
+.maatlas-hero-media,
+.maatlas-service-card,
+.maatlas-showcase-card,
+.maatlas-contact-card,
+.maatlas-contact-panel {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(235, 235, 235, 0.96) 100%);
+	border: 1px solid var(--maatlas-border);
+	border-radius: var(--maatlas-radius);
+	box-shadow: var(--maatlas-shadow);
+}
+
+.maatlas-eyebrow {
+	margin: 0 0 12px;
+	color: var(--maatlas-steel-soft);
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.maatlas-title {
+	margin: 0;
+	font-family: "Playfair Display", serif;
+	font-size: clamp(1.7rem, 3.6vw, 3.15rem);
+	line-height: 0.96;
+	letter-spacing: -0.04em;
+}
+
+.maatlas-lead {
+	font-size: 1.08rem;
+	line-height: 1.8;
+	color: rgba(17, 17, 17, 0.82);
+}
+
+.maatlas-button-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+	margin-top: 24px;
+}
+
+.maatlas-button,
+.maatlas-button-secondary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 14px 22px;
+	border-radius: 999px;
+	border: 1px solid #111111;
+	font-weight: 800;
+	letter-spacing: 0.05em;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.maatlas-button {
+	background: #111111;
+	color: #ffffff;
+	box-shadow: 0 12px 26px rgba(0, 0, 0, 0.14);
+}
+
+.maatlas-button-secondary {
+	background: rgba(255, 255, 255, 0.92);
+	color: #111111;
+}
+
+.maatlas-button:hover,
+.maatlas-button:focus,
+.maatlas-button-secondary:hover,
+.maatlas-button-secondary:focus {
+	transform: translateY(-2px);
+}
+
+.maatlas-grid-2,
+.maatlas-grid-3,
+.maatlas-service-grid,
+.maatlas-contact-grid,
+.maatlas-image-grid,
+.maatlas-showcase-grid {
+	display: grid;
+	gap: 24px;
+}
+
+.maatlas-grid-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.maatlas-grid-3,
+.maatlas-service-grid,
+.maatlas-contact-grid,
+.maatlas-showcase-grid {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.maatlas-home-hero {
+	align-items: stretch;
+	grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+}
+
+.maatlas-hero-copy {
+	padding: 34px;
+}
+
+.maatlas-hero-copy p {
+	margin: 18px 0 0;
+}
+
+.maatlas-highlight-list {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+	margin: 28px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.maatlas-highlight-list li {
+	padding: 16px 18px;
+	border-radius: 20px;
+	background: rgba(17, 17, 17, 0.06);
+	font-weight: 700;
+}
+
+.maatlas-hero-media {
+	display: grid;
+	grid-template-rows: minmax(210px, 1fr) auto;
+	gap: 18px;
+	padding: 18px;
+	min-height: 100%;
+}
+
+.maatlas-hero-frame {
+	overflow: hidden;
+	border-radius: calc(var(--maatlas-radius) - 10px);
+	min-height: 210px;
+	background: #cfcfcf;
+}
+
+.maatlas-lightbox-trigger {
+	display: block;
+	cursor: zoom-in;
+}
+
+.maatlas-hero-media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: grayscale(1) contrast(1.04);
+	transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.maatlas-lightbox-trigger:hover img,
+.maatlas-lightbox-trigger:focus img,
+.maatlas-hero-media:hover .maatlas-hero-frame img,
+.maatlas-hero-frame:hover img,
+.maatlas-hero-frame:focus img {
+	transform: scale(1.03);
+	filter: grayscale(0) contrast(1.02) saturate(1.05);
+}
+
+.maatlas-hero-thumb-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.maatlas-section-heading {
+	max-width: 44rem;
+	margin-bottom: 18px;
+}
+
+.maatlas-section-heading-wide {
+	max-width: none;
+}
+
+.maatlas-section-heading-wide .maatlas-lead {
+	max-width: none;
+}
+
+.maatlas-breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	margin: 0 0 12px;
+	font-size: 0.95rem;
+	color: rgba(17, 17, 17, 0.62);
+}
+
+.maatlas-breadcrumb a {
+	text-decoration: none;
+}
+
+.maatlas-breadcrumb strong {
+	color: #111111;
+}
+
+.maatlas-section-heading h2 {
+	margin: 0 0 10px;
+	font-family: "Playfair Display", serif;
+	font-size: clamp(1.6rem, 2.4vw, 2.45rem);
+	letter-spacing: -0.03em;
+	line-height: 1.02;
+}
+
+.maatlas-section-heading p {
+	margin: 0;
+	line-height: 1.8;
+	color: rgba(17, 17, 17, 0.76);
+}
+
+.maatlas-showcase-card,
+.maatlas-card,
+.maatlas-panel {
+	padding: 30px;
+}
+
+.maatlas-showcase-card h3,
+.maatlas-card h2,
+.maatlas-panel h2 {
+	margin: 0 0 12px;
+	font-size: 1.4rem;
+}
+
+.maatlas-showcase-card p,
+.maatlas-card p,
+.maatlas-panel p,
+.maatlas-panel li {
+	line-height: 1.8;
+}
+
+.maatlas-image-grid {
+	grid-template-columns: 1.35fr 0.85fr 0.85fr;
+	grid-auto-rows: 220px;
+}
+
+.maatlas-image-grid a,
+.maatlas-gallery-grid a,
+.maatlas-hero-thumb-grid a {
+	overflow: hidden;
+	position: relative;
+	border-radius: 24px;
+	border: 1px solid var(--maatlas-border);
+	box-shadow: var(--maatlas-shadow);
+	background: #d9d9d9;
+	text-decoration: none;
+}
+
+.maatlas-photo-card img,
+.maatlas-photo-card span,
+.maatlas-photo-card::after {
+	transition: transform 0.25s ease, filter 0.25s ease, background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+}
+
+.maatlas-image-grid img,
+.maatlas-gallery-grid img,
+.maatlas-hero-thumb-grid img {
+	width: 100%;
+	height: 280px;
+	object-fit: cover;
+	filter: grayscale(1) contrast(1.04);
+	transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.maatlas-hero-thumb-grid img {
+	height: 160px;
+}
+
+.maatlas-image-grid a:hover img,
+.maatlas-image-grid a:focus img,
+.maatlas-gallery-grid a:hover img,
+.maatlas-gallery-grid a:focus img,
+.maatlas-hero-thumb-grid a:hover img,
+.maatlas-hero-thumb-grid a:focus img,
+.maatlas-photo-card:hover img,
+.maatlas-photo-card:focus img {
+	transform: scale(1.04);
+	filter: grayscale(0) contrast(1.02) saturate(1.05);
+}
+
+.maatlas-photo-card span {
+	position: absolute;
+	left: 16px;
+	right: 16px;
+	bottom: 16px;
+	z-index: 1;
+	padding: 10px 14px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.88);
+	backdrop-filter: blur(10px);
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.maatlas-photo-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(17, 17, 17, 0.02) 0%, rgba(17, 17, 17, 0.35) 100%);
+	opacity: 0.9;
+	pointer-events: none;
+}
+
+.maatlas-photo-card:hover span,
+.maatlas-photo-card:focus span {
+	background: var(--maatlas-brand-accent);
+	color: #111111;
+}
+
+.maatlas-photo-card:hover::after,
+.maatlas-photo-card:focus::after {
+	background: linear-gradient(180deg, rgba(176, 205, 86, 0.08) 0%, rgba(176, 205, 86, 0.28) 100%);
+	opacity: 1;
+}
+
+.maatlas-image-grid a:first-child {
+	grid-row: span 2;
+}
+
+.maatlas-image-grid a:first-child img {
+	height: 100%;
+}
+
+.maatlas-gallery-grid {
+	grid-template-columns: 1.15fr 1fr 1fr;
+	grid-auto-rows: 220px;
+	gap: 18px;
+}
+
+.maatlas-gallery-grid-uniform {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-auto-rows: 220px;
+}
+
+.maatlas-gallery-grid a:first-child,
+.maatlas-gallery-grid a:last-child {
+	grid-row: span 2;
+}
+
+.maatlas-gallery-grid a:first-child img,
+.maatlas-gallery-grid a:last-child img {
+	height: 100%;
+}
+
+.maatlas-gallery-grid-uniform a:first-child,
+.maatlas-gallery-grid-uniform a:last-child {
+	grid-row: span 1;
+}
+
+.maatlas-gallery-grid-uniform img {
+	height: 220px;
+}
+
+.maatlas-service-detail-gallery {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: start;
+	height: var(--maatlas-gallery-available-height, auto);
+}
+
+.maatlas-service-detail-stage {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	min-height: var(--maatlas-gallery-stage-height, min(60vh, 760px));
+	border-radius: 28px;
+	border: 1px solid var(--maatlas-border);
+	box-shadow: var(--maatlas-shadow);
+	background: rgba(255, 255, 255, 0.75);
+	text-decoration: none;
+	padding: 4px;
+}
+
+.maatlas-service-detail-stage img {
+	width: auto;
+	height: auto;
+	max-width: calc(100% - 8px);
+	max-height: calc(var(--maatlas-gallery-stage-height, min(60vh, 760px)) - 8px);
+	object-fit: contain;
+	filter: grayscale(0.12) contrast(1.02);
+}
+
+.maatlas-service-detail-caption {
+	width: 100%;
+	margin: -4px 0 0;
+	font-size: 1rem;
+	line-height: 1.7;
+	color: rgba(17, 17, 17, 0.78);
+}
+
+.maatlas-service-detail-strip-wrap {
+	width: 100%;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	gap: 12px;
+	align-items: center;
+	margin-top: auto;
+}
+
+.maatlas-service-detail-strip {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 96px;
+	gap: 12px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding-bottom: 6px;
+	scrollbar-width: thin;
+	scroll-behavior: smooth;
+	max-height: none;
+}
+
+.maatlas-service-detail-thumb {
+	padding: 0;
+	border: 1px solid var(--maatlas-border);
+	border-radius: 22px;
+	background: #d9d9d9;
+	box-shadow: var(--maatlas-shadow);
+	overflow: hidden;
+	cursor: pointer;
+	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.maatlas-service-detail-thumb img {
+	width: 100%;
+	height: 64px;
+	object-fit: cover;
+	filter: grayscale(0.85) contrast(1.03);
+	transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.maatlas-service-detail-thumb:hover img,
+.maatlas-service-detail-thumb:focus img,
+.maatlas-service-detail-thumb.is-active img {
+	filter: grayscale(0) contrast(1.02);
+	transform: scale(1.02);
+}
+
+.maatlas-service-detail-thumb.is-active {
+	border-color: rgba(176, 205, 86, 0.95);
+	box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+}
+
+.maatlas-service-detail-strip-nav {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	height: 42px;
+	border: 1px solid var(--maatlas-border);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.94);
+	color: #111111;
+	font-size: 1.6rem;
+	line-height: 1;
+	cursor: pointer;
+	box-shadow: var(--maatlas-shadow);
+}
+
+.maatlas-cta-band {
+	display: grid;
+	grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.9fr);
+	gap: 28px;
+	align-items: center;
+	padding: 34px;
+}
+
+.maatlas-cta-band h2 {
+	margin: 0 0 12px;
+	font-family: "Playfair Display", serif;
+	font-size: clamp(2rem, 3vw, 3rem);
+}
+
+.maatlas-cta-band p {
+	margin: 0;
+	line-height: 1.8;
+}
+
+.maatlas-cta-actions {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.maatlas-about-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+}
+
+.maatlas-gallery-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 18px;
+}
+
+.maatlas-service-grid {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.maatlas-service-card {
+	overflow: hidden;
+	padding: 0;
+}
+
+.maatlas-service-link-card {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+}
+
+.maatlas-service-link-card:hover img,
+.maatlas-service-link-card:focus img {
+	transform: scale(1.04);
+	filter: grayscale(0.82) contrast(1.06);
+}
+
+.maatlas-service-card img {
+	width: 100%;
+	height: 240px;
+	object-fit: cover;
+	filter: grayscale(1);
+}
+
+.maatlas-service-card-body {
+	padding: 26px;
+}
+
+.maatlas-service-card-body h2 {
+	margin: 0 0 10px;
+	font-size: 1.38rem;
+}
+
+.maatlas-service-card-body p {
+	margin: 0;
+	line-height: 1.8;
+}
+
+.maatlas-contact-page {
+	padding: 0;
+}
+
+.maatlas-contact-card {
+	padding: 30px;
+}
+
+.maatlas-contact-card h1 {
+	margin: 0 0 16px;
+	font-family: "Playfair Display", serif;
+	font-size: clamp(1.9rem, 4vw, 3.4rem);
+	letter-spacing: -0.04em;
+	line-height: 0.98;
+}
+
+.maatlas-contact-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+	gap: 24px;
+	align-items: start;
+}
+
+.maatlas-contact-side {
+	display: grid;
+	gap: 24px;
+}
+
+.maatlas-contact-side .maatlas-contact-grid {
+	grid-template-columns: 1fr;
+	gap: 18px;
+}
+
+.maatlas-contact-grid {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.maatlas-contact-panel {
+	padding: 24px;
+}
+
+.maatlas-contact-form-panel {
+	padding: 30px;
+}
+
+.maatlas-contact-panel h2 {
+	margin: 0 0 12px;
+}
+
+.maatlas-contact-panel p,
+.maatlas-contact-panel li {
+	line-height: 1.8;
+}
+
+.maatlas-contact-form {
+	display: grid;
+	gap: 18px;
+	margin-top: 22px;
+}
+
+.maatlas-form-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.maatlas-form-field {
+	display: grid;
+	gap: 8px;
+	font-weight: 700;
+}
+
+.maatlas-form-field span {
+	font-size: 0.95rem;
+}
+
+.maatlas-form-field input,
+.maatlas-form-field textarea {
+	width: 100%;
+	padding: 14px 16px;
+	border: 1px solid rgba(17, 17, 17, 0.14);
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.94);
+	color: #111111;
+	font: inherit;
+}
+
+.maatlas-form-field textarea {
+	resize: vertical;
+	min-height: 180px;
+}
+
+.maatlas-contact-form-actions {
+	margin-top: 0;
+}
+
+.maatlas-contact-form-actions .maatlas-button {
+	appearance: none;
+	border: 1px solid #111111;
+	cursor: pointer;
+	font: inherit;
+}
+
+.maatlas-public-alert {
+	margin: 18px 0 0;
+	padding: 14px 16px;
+	border-radius: 18px;
+	font-weight: 700;
+}
+
+.maatlas-public-alert-success {
+	background: rgba(17, 17, 17, 0.08);
+}
+
+.maatlas-public-alert-error {
+	background: rgba(138, 17, 17, 0.12);
+	color: #7a0000;
+}
+
+.maatlas-form-field-hidden {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.maatlas-contact-consent {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	line-height: 1.7;
+}
+
+.maatlas-contact-consent input {
+	margin-top: 4px;
+}
+
+.maatlas-contact-privacy-box {
+	display: grid;
+	gap: 8px;
+	padding: 16px 18px;
+	border-radius: 18px;
+	background: rgba(176, 205, 86, 0.14);
+	border: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.maatlas-contact-privacy-box strong,
+.maatlas-contact-privacy-box p {
+	margin: 0;
+}
+
+.maatlas-contact-legal-note {
+	margin: 0;
+	color: rgba(17, 17, 17, 0.75);
+	font-size: 0.94rem;
+}
+
+.maatlas-map-consent-card {
+	display: grid;
+	gap: 16px;
+	padding: 22px;
+	border-radius: 22px;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(233, 233, 233, 0.96) 100%);
+	border: 1px solid rgba(17, 17, 17, 0.1);
+	min-height: 220px;
+	align-content: center;
+}
+
+.maatlas-map-consent-card p {
+	margin: 0;
+}
+
+.maatlas-map-consent-button {
+	justify-self: flex-start;
+}
+
+.maatlas-contact-map-card {
+	padding: 22px;
+}
+
+.maatlas-contact-map-frame {
+	overflow: hidden;
+	border-radius: 22px;
+	border: 1px solid rgba(17, 17, 17, 0.1);
+	background: #d8d8d8;
+	min-height: 360px;
+}
+
+.maatlas-contact-map-frame iframe {
+	display: block;
+	width: 100%;
+	height: 360px;
+	border: 0;
+	filter: grayscale(1) contrast(1.02);
+}
+
+.maatlas-contact-panel ul {
+	margin: 0;
+	padding-left: 1.2rem;
+}
+
+.maatlas-social-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 14px;
+}
+
+.maatlas-social-links a {
+	display: inline-flex;
+	padding: 12px 16px;
+	border-radius: 999px;
+	background: #111111;
+	color: #ffffff;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.maatlas-legal-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+}
+
+.top-datetime {
+	position: fixed;
+	top: 18px;
+	right: 24px;
+	z-index: 30;
+	padding: 8px 12px;
+	border-radius: 999px;
+	background: rgba(17, 17, 17, 0.92);
+	color: #ffffff;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: lowercase;
+	box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+}
+
+.maatlas-site-shell {
+	width: 100%;
+	padding: 0 24px;
+}
+
+.maatlas-shell-inner {
+	max-width: var(--maatlas-content);
+	margin: 14px auto;
+	background: rgba(255, 255, 255, 0.94);
+	border: 1px solid rgba(17, 17, 17, 0.1);
+	border-radius: 28px;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+	backdrop-filter: blur(18px);
+}
+
+.maatlas-site-shell-header + * {
+	margin-top: 0;
+}
+
+.maatlas-shell-header-inner,
+.maatlas-shell-footer-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 18px;
+	padding: 12px 22px;
+}
+
+.maatlas-shell-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	color: var(--maatlas-steel);
+	text-decoration: none;
+}
+
+.maatlas-shell-brand-logo {
+	width: 74px;
+	height: 74px;
+	border-radius: 0;
+	object-fit: contain;
+	border: 0;
+	box-shadow: none;
+	background: transparent;
+	flex: 0 0 auto;
+}
+
+.maatlas-shell-brand-text {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.maatlas-shell-brand-text strong {
+	font-size: 0.98rem;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+.maatlas-shell-brand-text small,
+.maatlas-shell-footer-copy p {
+	color: rgba(17, 17, 17, 0.72);
+}
+
+.maatlas-shell-footer-copy {
+	display: grid;
+	gap: 10px;
+}
+
+.maatlas-shell-footer-copy p {
+	margin: 0;
+}
+
+.maatlas-shell-footer-legal {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.maatlas-shell-legal-link {
+	color: rgba(17, 17, 17, 0.76);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.maatlas-shell-legal-link:hover,
+.maatlas-shell-legal-link:focus {
+	text-decoration: underline;
+}
+
+.maatlas-shell-nav,
+.maatlas-shell-footer-nav,
+.maatlas-shell-footer-socials {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.maatlas-shell-link,
+.maatlas-shell-social {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 16px;
+	border-radius: 999px;
+	border: 1px solid rgba(17, 17, 17, 0.14);
+	background: rgba(245, 245, 245, 0.95);
+	color: var(--maatlas-steel);
+	font-size: 0.9rem;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.maatlas-shell-link:hover,
+.maatlas-shell-link:focus,
+.maatlas-shell-social:hover,
+.maatlas-shell-social:focus,
+.maatlas-shell-link.is-current {
+	background: linear-gradient(135deg, var(--maatlas-brand-accent) 0%, rgba(176, 205, 86, 0.72) 100%);
+	color: #111111;
+	border-color: rgba(17, 17, 17, 0.16);
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
+	transform: translateY(-1px);
+}
+
+.maatlas-shell-footer-nav .maatlas-shell-link,
+.maatlas-shell-footer-socials .maatlas-shell-social {
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	text-transform: none;
+}
+
+.maatlas-shell-footer-nav .maatlas-shell-link:hover,
+.maatlas-shell-footer-nav .maatlas-shell-link:focus,
+.maatlas-shell-footer-nav .maatlas-shell-link.is-current,
+.maatlas-shell-footer-socials .maatlas-shell-social:hover,
+.maatlas-shell-footer-socials .maatlas-shell-social:focus {
+	background: transparent;
+	color: var(--maatlas-brand-accent);
+	box-shadow: none;
+	transform: none;
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+}
+
+.maatlas-shell-footer-copy {
+	max-width: 33rem;
+}
+
+.maatlas-shell-footer-copy strong {
+	display: block;
+	margin-bottom: 8px;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+.maatlas-floating-socials {
+	position: fixed;
+	left: 18px;
+	top: 80%;
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	transform: translateY(-50%);
+}
+
+.maatlas-floating-social {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	border-radius: 999px;
+	background: linear-gradient(135deg, #111111 0%, #4d4d4d 100%);
+	color: #fff;
+	text-decoration: none;
+	box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.maatlas-floating-social:hover,
+.maatlas-floating-social:focus {
+	transform: translateX(3px);
+	box-shadow: 0 22px 40px rgba(0, 0, 0, 0.22);
+}
+
+.maatlas-floating-social-icon {
+	display: inline-grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
+	font-size: 1rem;
+	font-weight: 800;
+	line-height: 1;
+	text-transform: lowercase;
+}
+
+.maatlas-floating-social-icon svg {
+	width: 22px;
+	height: 22px;
+}
+
+.maatlas-floating-social-icon svg path {
+	fill: currentColor;
+}
+
+.maatlas-floating-facebook .maatlas-floating-social-icon {
+	font-size: 1.25rem;
+}
+
+.maatlas-floating-instagram .maatlas-floating-social-icon {
+	font-size: 1rem;
+}
+
+.maatlas-back-to-top {
+	position: fixed;
+	z-index: 34;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 54px;
+	height: 54px;
+	border: 1px solid rgba(17, 17, 17, 0.16);
+	border-radius: 999px;
+	background: linear-gradient(135deg, var(--maatlas-brand-accent) 0%, rgba(176, 205, 86, 0.72) 100%);
+	color: #111111;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+	cursor: pointer;
+	opacity: 0;
+	pointer-events: none;
+	--maatlas-back-to-top-shift-x: 0;
+	--maatlas-back-to-top-shift-y: 0;
+	transform: translate(var(--maatlas-back-to-top-shift-x), calc(var(--maatlas-back-to-top-shift-y) + 12px));
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.maatlas-back-to-top.is-visible {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translate(var(--maatlas-back-to-top-shift-x), var(--maatlas-back-to-top-shift-y));
+}
+
+.maatlas-back-to-top-icon {
+	font-size: 1.4rem;
+	font-weight: 800;
+	line-height: 1;
+}
+
+.maatlas-legal-notice {
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 35;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	max-width: min(560px, calc(100% - 32px));
+	padding: 16px 18px;
+	border-radius: 22px;
+	background: rgba(17, 17, 17, 0.94);
+	color: #ffffff;
+	box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+}
+
+.maatlas-legal-notice p {
+	margin: 0;
+	font-size: 0.92rem;
+	line-height: 1.65;
+}
+
+.maatlas-legal-notice a {
+	color: #ffffff;
+	font-weight: 700;
+}
+
+.maatlas-legal-notice-close {
+	appearance: none;
+	-webkit-appearance: none;
+	padding: 10px 14px;
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.14);
+	color: #ffffff;
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+body.maatlas-lightbox-open {
+	overflow: hidden;
+}
+
+body.maatlas-lightbox-open .top-datetime,
+body.maatlas-lightbox-open .site-site-blocks,
+body.maatlas-lightbox-open .maatlas-floating-socials,
+body.maatlas-lightbox-open .maatlas-back-to-top,
+body.maatlas-lightbox-open .maatlas-legal-notice {
+	filter: blur(10px);
+	transition: filter 0.25s ease;
+}
+
+.maatlas-lightbox {
+	position: fixed;
+	inset: 0;
+	z-index: 10050;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 28px;
+	background: rgba(17, 17, 17, 0.36);
+}
+
+.maatlas-lightbox-dialog {
+	position: relative;
+	display: grid;
+	gap: 14px;
+	width: min(1080px, calc(100vw - 56px));
+	max-height: calc(100vh - 56px);
+	padding: 18px;
+	border-radius: 28px;
+	background: rgba(255, 255, 255, 0.9);
+	box-shadow: 0 26px 60px rgba(0, 0, 0, 0.26);
+	backdrop-filter: blur(14px);
+}
+
+.maatlas-lightbox-close {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	height: 42px;
+	border: 1px solid rgba(17, 17, 17, 0.12);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.92);
+	color: #111111;
+	font-size: 1.6rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.maatlas-lightbox-nav {
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border: 1px solid rgba(17, 17, 17, 0.12);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.92);
+	color: #111111;
+	font-size: 2rem;
+	line-height: 1;
+	cursor: pointer;
+	transform: translateY(-50%);
+}
+
+.maatlas-lightbox-prev {
+	left: 18px;
+}
+
+.maatlas-lightbox-next {
+	right: 18px;
+}
+
+.maatlas-lightbox-nav:disabled {
+	opacity: 0.35;
+	cursor: default;
+}
+
+.maatlas-lightbox-media {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 240px;
+	overflow: hidden;
+	border-radius: 22px;
+	background: rgba(17, 17, 17, 0.05);
+}
+
+.maatlas-lightbox-image {
+	display: block;
+	max-width: 100%;
+	max-height: calc(100vh - 180px);
+	border-radius: 18px;
+	object-fit: contain;
+}
+
+.maatlas-lightbox-footer {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.maatlas-lightbox-caption,
+.maatlas-lightbox-counter,
+.maatlas-lightbox-loading {
+	margin: 0;
+	font-weight: 700;
+	color: rgba(17, 17, 17, 0.8);
+}
+
+.maatlas-lightbox-counter {
+	margin-left: auto;
+	font-size: 0.95rem;
+	text-align: right;
+	white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+	.maatlas-contact-layout {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-grid-3,
+	.maatlas-service-grid,
+	.maatlas-contact-grid,
+	.maatlas-legal-grid,
+	.maatlas-about-grid,
+	.maatlas-showcase-grid,
+	.maatlas-image-grid,
+	.maatlas-gallery-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.maatlas-image-grid,
+	.maatlas-gallery-grid {
+		grid-auto-rows: 220px;
+	}
+
+	.maatlas-service-detail-strip {
+		grid-auto-columns: 96px;
+		padding-bottom: 8px;
+	}
+
+	.maatlas-image-grid a:first-child,
+	.maatlas-gallery-grid a:first-child,
+	.maatlas-gallery-grid a:last-child {
+		grid-row: span 1;
+	}
+
+	.maatlas-cta-band {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-cta-actions {
+		justify-content: flex-start;
+	}
+
+	.maatlas-service-detail-strip-wrap {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-service-detail-gallery {
+		height: auto;
+	}
+
+	.maatlas-service-detail-strip-nav {
+		display: none;
+	}
+
+	.maatlas-lightbox-dialog {
+		width: min(100vw, calc(100vw - 24px));
+		max-height: calc(100vh - 24px);
+		padding: 16px;
+	}
+
+	.maatlas-lightbox-nav {
+		width: 42px;
+		height: 42px;
+		font-size: 1.75rem;
+	}
+
+	.maatlas-lightbox-prev {
+		left: 12px;
+	}
+
+	.maatlas-lightbox-next {
+		right: 12px;
+	}
+
+	.maatlas-lightbox-footer {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.maatlas-lightbox-counter {
+		margin-left: 0;
+		text-align: right;
+	}
+}
+
+@media (max-width: 900px) {
+	.maatlas-form-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-grid-2,
+	.maatlas-grid-3,
+	.maatlas-service-grid,
+	.maatlas-contact-grid,
+	.maatlas-about-grid,
+	.maatlas-showcase-grid,
+	.maatlas-image-grid,
+	.maatlas-gallery-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-highlight-list {
+		grid-template-columns: 1fr;
+	}
+
+	.maatlas-hero-thumb-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.top-datetime {
+		position: static;
+		display: inline-flex;
+		margin: 16px 24px 0;
+	}
+
+	.maatlas-legal-notice {
+		left: 16px;
+		right: 16px;
+		bottom: 16px;
+		flex-direction: column;
+		align-items: flex-start;
+		max-width: none;
+	}
+
+	.maatlas-back-to-top {
+		width: 48px;
+		height: 48px;
+	}
+}
+
+@media (max-width: 768px) {
+	.maatlas-main {
+		width: min(var(--maatlas-content), calc(100% - 32px));
+		padding-bottom: 36px;
+	}
+
+	.maatlas-site-shell {
+		padding: 0 16px;
+	}
+
+	.maatlas-shell-inner {
+		margin: 16px auto;
+	}
+
+	.maatlas-shell-header-inner,
+	.maatlas-shell-footer-inner {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 14px 18px;
+	}
+
+	.maatlas-shell-brand-logo {
+		width: 64px;
+		height: 64px;
+	}
+
+	.maatlas-hero-copy,
+	.maatlas-card,
+	.maatlas-panel,
+	.maatlas-showcase-card,
+	.maatlas-contact-card,
+	.maatlas-contact-panel,
+	.maatlas-service-card-body,
+	.maatlas-cta-band {
+		padding: 24px;
+	}
+
+	.maatlas-hero-media {
+		padding: 14px;
+		grid-template-rows: minmax(220px, 1fr) auto;
+	}
+
+	.maatlas-hero-frame {
+		min-height: 220px;
+	}
+
+	.maatlas-floating-socials {
+		left: 16px;
+		top: auto;
+		bottom: 32px;
+		transform: none;
+	}
+
+	.maatlas-floating-social:hover,
+	.maatlas-floating-social:focus {
+		transform: translateY(-2px);
+	}
+}
