@@ -2079,6 +2079,53 @@ Sociale media horen niet hardcoded per pagina te staan. De bron is de admininste
 			'created_at' => $now,
 			'updated_at' => $now,
 		],
+		[
+			'id' => 'lb-template-domain-portability',
+			'rubric' => 'Publicatie',
+			'code' => '07.02',
+			'title' => 'Domeinverhuis en host-onafhankelijke werking',
+			'content' => 'Doel: de website moet zonder codewijzigingen kunnen werken wanneer de inhoud naar een andere domeinnaam wordt verhuisd, zolang de site in de webroot van dat domein wordt geplaatst.
+
+Wat domein-onafhankelijk is:
+1. Publieke links gebruiken root-relative paden zoals `/about/`, `/services/`, `/contact/`, `/assets/...`.
+2. Adminlinks gebruiken root-relative paden zoals `/admin/`, `/admin/login.php` en `/admin/activate.php`.
+3. Activatielinks voor beheerders worden opgebouwd met de actuele `HTTP_HOST` via `maatlas_admin_current_host_url()`.
+4. QR-codes voor mobiele upload gebruiken eveneens de actuele host.
+5. Contactmails gebruiken de actuele `HTTP_HOST` in het onderwerp.
+6. `index.html` bevat geen hardcoded canonical domein meer en verwijst alleen door naar `/index.php`.
+7. De root `.htaccess` bevat geen oude WordPress `RewriteBase /maatlaswerk/` meer.
+
+Wat bij verhuis moet worden aangepast:
+1. DNS van het nieuwe domein moet naar de hosting wijzen.
+2. De documentroot van het nieuwe domein moet de inhoud van `Website/` bevatten.
+3. SFTP-config is deploymentconfiguratie en moet aangepast worden naar de nieuwe host/remotePath als de hosting verandert.
+4. E-mailinstellingen in `/admin/settings.php` moeten kloppen voor het nieuwe domein of de nieuwe afzender.
+5. SPF/DKIM/DMARC van het nieuwe domein moeten mailverzending toelaten als het contactformulier of adminmails vanaf dat domein verzenden.
+6. Externe profielen zoals Facebook, Instagram, Google Maps en Forster blijven externe absolute links en hoeven alleen aangepast te worden als de inhoud wijzigt.
+
+Beperkingen:
+1. De site is bedoeld om in de webroot van een domein te draaien.
+2. Installatie in een submap zoals `/maatlaswerk/` vraagt extra aanpassingen, omdat veel links bewust root-relative zijn.
+3. Een andere domeinnaam zoals `nieuwedomein.be` werkt wel, zolang `/` de webroot van de site is.
+
+Controle na domeinverhuis:
+1. Open `/`, `/index.php`, `/about/`, `/services/`, `/contact/`, `/privacy/` en `/cookies/`.
+2. Controleer `/admin/` en login.
+3. Controleer `/admin/activate.php?token=ongeldig` op correcte foutpagina.
+4. Controleer dat `/admin/storage/lastenboek.php` en `/admin/bootstrap.php` direct `403 Forbidden` geven.
+5. Test een contactformulier in testmodus.
+6. Test een admin-uitnodiging indien mail op het nieuwe domein is ingesteld.
+7. Controleer browserconsole op ontbrekende assets.
+8. Controleer dat afbeeldingen via `/assets/uploads/...` laden.
+
+Niet meenemen bij upload naar een nieuw domein:
+1. Lokale mappen zoals `.vscode`, `_import`, `_generated-export`, `scripts` en oude SQL/testbestanden.
+2. Alleen de webinhoud onder `Website/` hoort naar de webroot, met uitzondering van lokale hulpmappen die in SFTP ignore staan.',
+			'status' => 'concept',
+			'position' => 12,
+			'created_at' => $now,
+			'updated_at' => $now,
+		],
 	];
 }
 

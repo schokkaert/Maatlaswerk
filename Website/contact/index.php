@@ -48,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$errorMessage = 'Het ontvangstadres voor contactberichten is nog niet correct ingesteld in de admin.';
 		} else {
 		$cleanSubject = preg_replace('/[\r\n]+/', ' ', $formData['subject']) ?? '';
-		$mailSubject = 'Nieuwe contactaanvraag via maatlaswerk.digisteps.be';
+		$currentHost = trim((string) ($_SERVER['HTTP_HOST'] ?? 'de website'));
+		$mailSubject = 'Nieuwe contactaanvraag via ' . ($currentHost !== '' ? $currentHost : 'de website');
 		if ($cleanSubject !== '') {
 			$mailSubject .= ' - ' . $cleanSubject;
 		}
