@@ -5,8 +5,7 @@ require __DIR__ . '/bootstrap.php';
 
 $currentAdmin = maatlas_admin_current();
 if ($currentAdmin !== null) {
-	header('Location: ' . (maatlas_admin_is_initial_setup_required() && maatlas_admin_is_temporary($currentAdmin) ? '/admin/administrators.php?setup=1' : '/admin/'));
-	exit;
+	maatlas_admin_redirect(maatlas_admin_is_initial_setup_required() && maatlas_admin_is_temporary($currentAdmin) ? '/admin/administrators.php?setup=1' : '/admin/');
 }
 
 $error = null;
@@ -29,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$admin['updated_at'] = date('c');
 			maatlas_admin_update($admin);
 			maatlas_admin_login($admin);
-			header('Location: ' . (maatlas_admin_is_initial_setup_required() && maatlas_admin_is_temporary($admin) ? '/admin/administrators.php?setup=1' : '/admin/'));
-			exit;
+			maatlas_admin_redirect(maatlas_admin_is_initial_setup_required() && maatlas_admin_is_temporary($admin) ? '/admin/administrators.php?setup=1' : '/admin/');
 		}
 	}
 }

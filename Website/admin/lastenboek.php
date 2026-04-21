@@ -96,7 +96,7 @@ maatlas_admin_render_header('Technisch lastenboek', $currentAdmin);
 		<p class="maatlas-admin-eyebrow">Document</p>
 		<h2>Technische documentatie</h2>
 		<p>Hier beheer je het technisch lastenboek van de website zelf: opbouw, modules, galerij, formulieren, instellingen en publicatie. Je kan hieronder ook een basisdocument voor de website laden.</p>
-		<p><a class="maatlas-admin-button maatlas-admin-button-secondary" href="/admin/lastenboek.php?download=txt">Download volledig lastenboek als TXT</a></p>
+		<p><a class="maatlas-admin-button maatlas-admin-button-secondary" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/lastenboek.php?download=txt')); ?>">Download volledig lastenboek als TXT</a></p>
 		<form method="post" class="maatlas-admin-form">
 			<input type="hidden" name="csrf_token" value="<?= maatlas_admin_h(maatlas_admin_csrf_token()); ?>">
 			<input type="hidden" name="action" value="save_meta">
@@ -179,7 +179,7 @@ maatlas_admin_render_header('Technisch lastenboek', $currentAdmin);
 			<div class="maatlas-admin-actions">
 				<button type="submit" class="maatlas-admin-button"><?= $editingItem === null ? 'Toevoegen' : 'Opslaan'; ?></button>
 				<?php if ($editingItem !== null): ?>
-				<a class="maatlas-admin-button maatlas-admin-button-secondary" href="/admin/lastenboek.php">Nieuw item</a>
+				<a class="maatlas-admin-button maatlas-admin-button-secondary" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/lastenboek.php')); ?>">Nieuw item</a>
 				<?php endif; ?>
 			</div>
 		</form>

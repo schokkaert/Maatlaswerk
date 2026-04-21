@@ -247,11 +247,11 @@ function maatlas_admin_require_login(): array
 {
 	$current = maatlas_admin_current();
 	if ($current === null || empty($current['active'])) {
-		header('Location: /admin/login.php');
+		maatlas_admin_redirect('/admin/login.php');
 		exit;
 	}
 
-	$currentPath = (string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
+	$currentPath = maatlas_site_request_path();
 	$allowedSetupPaths = [
 		'/admin/administrators.php',
 		'/admin/logout.php',
@@ -261,7 +261,7 @@ function maatlas_admin_require_login(): array
 		&& maatlas_admin_is_temporary($current)
 		&& !in_array($currentPath, $allowedSetupPaths, true)
 	) {
-		header('Location: /admin/administrators.php?setup=1');
+		maatlas_admin_redirect('/admin/administrators.php?setup=1');
 		exit;
 	}
 
@@ -286,6 +286,17 @@ function maatlas_admin_verify_csrf(?string $token): bool
 function maatlas_admin_h(?string $value): string
 {
 	return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+}
+
+function maatlas_admin_url(string $path = '/'): string
+{
+	return maatlas_site_url($path);
+}
+
+function maatlas_admin_redirect(string $path): void
+{
+	header('Location: ' . maatlas_admin_url($path));
+	exit;
 }
 
 function maatlas_admin_is_activation_expired(array $admin): bool
@@ -451,7 +462,7 @@ function maatlas_gallery_relative_url(string $relativePath): string
 {
 	$relativePath = maatlas_gallery_normalize_relative_path($relativePath);
 	$segments = array_map('rawurlencode', explode('/', $relativePath));
-	return '/assets/uploads/' . implode('/', $segments);
+	return maatlas_admin_url('/assets/uploads/' . implode('/', $segments));
 }
 
 function maatlas_gallery_load_categories(): array
@@ -2084,29 +2095,34 @@ Sociale media horen niet hardcoded per pagina te staan. De bron is de admininste
 			'rubric' => 'Publicatie',
 			'code' => '07.02',
 			'title' => 'Domeinverhuis en host-onafhankelijke werking',
-			'content' => 'Doel: de website moet zonder codewijzigingen kunnen werken wanneer de inhoud naar een andere domeinnaam wordt verhuisd, zolang de site in de webroot van dat domein wordt geplaatst.
+			'content' => 'Doel: de website moet zonder codewijzigingen kunnen werken wanneer de inhoud naar een andere domeinnaam wordt verhuisd. De site ondersteunt nu zowel installatie in de webroot als installatie in een submap zoals `/maatlaswerk/`.
 
 Wat domein-onafhankelijk is:
-1. Publieke links gebruiken root-relative paden zoals `/about/`, `/services/`, `/contact/`, `/assets/...`.
-2. Adminlinks gebruiken root-relative paden zoals `/admin/`, `/admin/login.php` en `/admin/activate.php`.
-3. Activatielinks voor beheerders worden opgebouwd met de actuele `HTTP_HOST` via `maatlas_admin_current_host_url()`.
-4. QR-codes voor mobiele upload gebruiken eveneens de actuele host.
-5. Contactmails gebruiken de actuele `HTTP_HOST` in het onderwerp.
-6. `index.html` bevat geen hardcoded canonical domein meer en verwijst alleen door naar `/index.php`.
-7. De root `.htaccess` bevat geen oude WordPress `RewriteBase /maatlaswerk/` meer.
+1. Publieke links en assetpaden lopen via `maatlas_site_url()`.
+2. De actieve basismap wordt automatisch bepaald met `maatlas_site_base_path()`.
+3. Publieke navigatie, footerlinks, afbeeldingen, CSS en JavaScript werken daardoor in `/` en in een submap.
+4. Adminlinks, redirects en logout/loginpaden lopen via `maatlas_admin_url()` en `maatlas_admin_redirect()`.
+5. Activatielinks voor beheerders worden opgebouwd met de actuele `HTTP_HOST` plus de actuele basismap via `maatlas_admin_current_host_url()`.
+6. QR-codes voor mobiele upload gebruiken dezelfde actuele host en basismap.
+7. Contactmails gebruiken de actuele `HTTP_HOST` in het onderwerp.
+8. `index.html` en de HTML-doorverwijzers gebruiken relatieve redirects.
+9. De root `.htaccess` bevat geen oude WordPress `RewriteBase /maatlaswerk/` meer.
+10. De mobiele upload-manifesten gebruiken dynamische of relatieve paden.
 
 Wat bij verhuis moet worden aangepast:
 1. DNS van het nieuwe domein moet naar de hosting wijzen.
-2. De documentroot van het nieuwe domein moet de inhoud van `Website/` bevatten.
-3. SFTP-config is deploymentconfiguratie en moet aangepast worden naar de nieuwe host/remotePath als de hosting verandert.
-4. E-mailinstellingen in `/admin/settings.php` moeten kloppen voor het nieuwe domein of de nieuwe afzender.
-5. SPF/DKIM/DMARC van het nieuwe domein moeten mailverzending toelaten als het contactformulier of adminmails vanaf dat domein verzenden.
-6. Externe profielen zoals Facebook, Instagram, Google Maps en Forster blijven externe absolute links en hoeven alleen aangepast te worden als de inhoud wijzigt.
+2. Bij webroot-installatie moet de documentroot de inhoud van `Website/` bevatten.
+3. Bij submap-installatie moet de map, bijvoorbeeld `/maatlaswerk/`, de inhoud van `Website/` bevatten.
+4. SFTP-config is deploymentconfiguratie en moet aangepast worden naar de nieuwe host/remotePath als de hosting verandert.
+5. In `.vscode/sftp.json` horen vooral `host`, `username`, `password`, `remotePath` en eventueel `context` gecontroleerd te worden.
+6. E-mailinstellingen in `/admin/settings.php` moeten kloppen voor het nieuwe domein of de nieuwe afzender.
+7. SPF/DKIM/DMARC van het nieuwe domein moeten mailverzending toelaten als het contactformulier of adminmails vanaf dat domein verzenden.
+8. Externe profielen zoals Facebook, Instagram, Google Maps en Forster blijven externe absolute links en hoeven alleen aangepast te worden als de inhoud wijzigt.
 
-Beperkingen:
-1. De site is bedoeld om in de webroot van een domein te draaien.
-2. Installatie in een submap zoals `/maatlaswerk/` vraagt extra aanpassingen, omdat veel links bewust root-relative zijn.
-3. Een andere domeinnaam zoals `nieuwedomein.be` werkt wel, zolang `/` de webroot van de site is.
+Ondersteunde plaatsingen:
+1. `https://nieuwedomein.be/`
+2. `https://nieuwedomein.be/maatlaswerk/`
+3. `https://testdomein.be/projecten/maatlaswerk/`
 
 Controle na domeinverhuis:
 1. Open `/`, `/index.php`, `/about/`, `/services/`, `/contact/`, `/privacy/` en `/cookies/`.
@@ -2117,6 +2133,8 @@ Controle na domeinverhuis:
 6. Test een admin-uitnodiging indien mail op het nieuwe domein is ingesteld.
 7. Controleer browserconsole op ontbrekende assets.
 8. Controleer dat afbeeldingen via `/assets/uploads/...` laden.
+9. Bij submap-installatie moet dezelfde controle gebeuren met de submap ervoor, bijvoorbeeld `/maatlaswerk/contact/`.
+10. Controleer het dynamische manifest via `/admin/mobile-upload.webmanifest.php`.
 
 Niet meenemen bij upload naar een nieuw domein:
 1. Lokale mappen zoals `.vscode`, `_import`, `_generated-export`, `scripts` en oude SQL/testbestanden.
@@ -2143,7 +2161,7 @@ function maatlas_admin_current_host_url(string $path = '/'): string
 {
 	$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 	$host = trim((string) ($_SERVER['HTTP_HOST'] ?? ''));
-	$path = '/' . ltrim($path, '/');
+	$path = maatlas_admin_url($path);
 	if ($host === '') {
 		return $path;
 	}
@@ -2159,10 +2177,10 @@ function maatlas_admin_qr_image_url(string $targetUrl): string
 function maatlas_admin_public_navigation(): array
 {
 	return [
-		['label' => 'Home', 'href' => '/'],
-		['label' => 'Over ons', 'href' => '/about/'],
-		['label' => 'Diensten', 'href' => '/services/'],
-		['label' => 'Contact', 'href' => '/contact/'],
+		['label' => 'Home', 'href' => maatlas_admin_url('/')],
+		['label' => 'Over ons', 'href' => maatlas_admin_url('/about/')],
+		['label' => 'Diensten', 'href' => maatlas_admin_url('/services/')],
+		['label' => 'Contact', 'href' => maatlas_admin_url('/contact/')],
 	];
 }
 
@@ -2171,8 +2189,8 @@ function maatlas_admin_render_public_shell_header(): void
 	?>
 <div class="maatlas-site-shell maatlas-site-shell-header">
 	<div class="maatlas-shell-inner maatlas-shell-header-inner">
-		<a class="maatlas-shell-brand" href="/">
-			<img class="maatlas-shell-brand-logo" src="/assets/uploads/static/MaatLasWerk-13.jpg?v=20260329-3" alt="W&amp;S Maatlaswerk logo">
+		<a class="maatlas-shell-brand" href="<?= maatlas_admin_h(maatlas_admin_url('/')); ?>">
+			<img class="maatlas-shell-brand-logo" src="<?= maatlas_admin_h(maatlas_admin_url('/assets/uploads/static/MaatLasWerk-13.jpg?v=20260329-3')); ?>" alt="W&amp;S Maatlaswerk logo">
 			<span class="maatlas-shell-brand-text">
 				<strong>W&amp;S Maatlaswerk</strong>
 				<small>Metaal en glas op maat in Kluisbergen</small>
@@ -2210,8 +2228,8 @@ function maatlas_admin_render_public_shell_footer(): void
 			<p>BTW: <?= maatlas_admin_h($vatNumber); ?></p>
 			<?php endif; ?>
 			<div class="maatlas-shell-footer-legal">
-				<a class="maatlas-shell-legal-link" href="/privacy/">Privacyverklaring</a>
-				<a class="maatlas-shell-legal-link" href="/cookies/">Cookiebeleid</a>
+				<a class="maatlas-shell-legal-link" href="<?= maatlas_admin_h(maatlas_admin_url('/privacy/')); ?>">Privacyverklaring</a>
+				<a class="maatlas-shell-legal-link" href="<?= maatlas_admin_h(maatlas_admin_url('/cookies/')); ?>">Cookiebeleid</a>
 			</div>
 		</div>
 		<nav class="maatlas-shell-footer-nav" aria-label="Footer navigatie">
@@ -2229,7 +2247,7 @@ function maatlas_admin_render_public_shell_footer(): void
 			<?php endif; ?>
 		</div>
 		<?php endif; ?>
-		<a class="maatlas-shell-footer-admin" href="/admin/">Admin</a>
+		<a class="maatlas-shell-footer-admin" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/')); ?>">Admin</a>
 	</div>
 </div>
 	<?php
@@ -2239,7 +2257,7 @@ function maatlas_admin_render_header(string $title, ?array $currentAdmin = null)
 {
 	$hasSidebarLayout = $currentAdmin !== null;
 	$GLOBALS['maatlas_admin_has_sidebar_layout'] = $hasSidebarLayout;
-	$currentPath = (string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
+	$currentPath = maatlas_site_request_path();
 	$sidebarSubmenu = $GLOBALS['maatlas_admin_sidebar_submenu'] ?? [];
 	if (!is_array($sidebarSubmenu)) {
 		$sidebarSubmenu = [];
@@ -2259,8 +2277,8 @@ function maatlas_admin_render_header(string $title, ?array $currentAdmin = null)
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?= maatlas_admin_h($title); ?> | Admin | W&amp;S Maatlaswerk</title>
-	<link rel="stylesheet" href="/assets/themes/bluehost-blueprint/style.css?ver=2.0.4">
-	<link rel="stylesheet" href="/admin/style.css?v=20260331-1">
+	<link rel="stylesheet" href="<?= maatlas_admin_h(maatlas_admin_url('/assets/themes/bluehost-blueprint/style.css?ver=2.0.4')); ?>">
+	<link rel="stylesheet" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/style.css?v=20260331-1')); ?>">
 	<?php maatlas_site_render_theme_style(); ?>
 	<?php if (!empty($GLOBALS['maatlas_admin_extra_head'])): ?>
 	<?= $GLOBALS['maatlas_admin_extra_head']; ?>
@@ -2274,7 +2292,7 @@ function maatlas_admin_render_header(string $title, ?array $currentAdmin = null)
 		<strong>U bent aangemeld</strong>
 		<span>Gebruiker: <?= maatlas_admin_h((string) $currentAdmin['username']); ?> | Rol: <?= maatlas_admin_h((string) $currentAdmin['role']); ?></span>
 	</div>
-	<a href="/admin/logout.php">Uitloggen</a>
+	<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/logout.php')); ?>">Uitloggen</a>
 </div>
 <?php endif; ?>
 <div class="maatlas-admin-shell<?= $hasSidebarLayout ? ' maatlas-admin-shell-layout' : ''; ?>">
@@ -2307,7 +2325,7 @@ function maatlas_admin_render_header(string $title, ?array $currentAdmin = null)
 							<span class="maatlas-admin-sidebar-toggle-icon" aria-hidden="true"></span>
 						</button>
 						<?php else: ?>
-						<a class="<?= $isCurrent ? 'is-current' : ''; ?>" href="<?= maatlas_admin_h($navigationItem['href']); ?>"><?= maatlas_admin_h($navigationItem['label']); ?></a>
+						<a class="<?= $isCurrent ? 'is-current' : ''; ?>" href="<?= maatlas_admin_h(maatlas_admin_url($navigationItem['href'])); ?>"><?= maatlas_admin_h($navigationItem['label']); ?></a>
 						<?php endif; ?>
 						<?php if ($isCurrent && $navigationItem['href'] === '/admin/gallery.php' && $sidebarSubmenu !== []): ?>
 						<div class="maatlas-admin-sidebar-submenu" id="maatlas-admin-gallery-submenu">
@@ -2317,14 +2335,14 @@ function maatlas_admin_render_header(string $title, ?array $currentAdmin = null)
 								$submenuLabel = (string) ($submenuItem['label'] ?? '');
 								$submenuCurrent = !empty($submenuItem['is_current']);
 								?>
-								<a class="<?= $submenuCurrent ? 'is-current' : ''; ?>" href="<?= maatlas_admin_h($submenuHref); ?>"><?= maatlas_admin_h($submenuLabel); ?></a>
+								<a class="<?= $submenuCurrent ? 'is-current' : ''; ?>" href="<?= maatlas_admin_h(maatlas_admin_url($submenuHref)); ?>"><?= maatlas_admin_h($submenuLabel); ?></a>
 							<?php endforeach; ?>
 						</div>
 						<?php endif; ?>
 					</div>
 				<?php endforeach; ?>
 			</nav>
-			<a class="maatlas-admin-sidebar-logout" href="/admin/logout.php">Uitloggen</a>
+			<a class="maatlas-admin-sidebar-logout" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/logout.php')); ?>">Uitloggen</a>
 		</div>
 	</aside>
 	<div class="maatlas-admin-content">
@@ -2345,13 +2363,13 @@ function maatlas_admin_render_header(string $title, ?array $currentAdmin = null)
 				<span><?= maatlas_admin_h((string) $currentAdmin['role']); ?></span>
 			</div>
 			<nav class="maatlas-admin-nav" aria-label="Admin navigatie">
-				<a href="/admin/">Dashboard</a>
-				<a href="/admin/administrators.php">Beheerders</a>
-				<a href="/admin/gallery.php">Galerij</a>
-				<a href="/admin/mobile-upload.php">Mobiele upload</a>
-				<a href="/admin/lastenboek.php">Lastenboek</a>
-				<a href="/admin/settings.php">Instellingen</a>
-				<a href="/admin/logout.php">Uitloggen</a>
+				<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/')); ?>">Dashboard</a>
+				<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/administrators.php')); ?>">Beheerders</a>
+				<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/gallery.php')); ?>">Galerij</a>
+				<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/mobile-upload.php')); ?>">Mobiele upload</a>
+				<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/lastenboek.php')); ?>">Lastenboek</a>
+				<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/settings.php')); ?>">Instellingen</a>
+				<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/logout.php')); ?>">Uitloggen</a>
 			</nav>
 		</div>
 		<?php endif; ?>

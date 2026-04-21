@@ -2,6 +2,90 @@
 
 const MAATLAS_SITE_SETTINGS_STORAGE = __DIR__ . '/../admin/storage/site_settings.php';
 
+function maatlas_site_base_path()
+{
+	static $basePath = null;
+	if ($basePath !== null) {
+		return $basePath;
+	}
+
+	$documentRoot = realpath((string) ($_SERVER['DOCUMENT_ROOT'] ?? ''));
+	$siteRoot = realpath(__DIR__ . '/..');
+
+	if ($documentRoot !== false && $siteRoot !== false) {
+		$documentRoot = rtrim(str_replace('\\', '/', $documentRoot), '/');
+		$siteRoot = rtrim(str_replace('\\', '/', $siteRoot), '/');
+
+		if (
+			$documentRoot !== ''
+			&& ($siteRoot === $documentRoot || strncmp($siteRoot, $documentRoot . '/', strlen($documentRoot) + 1) === 0)
+		) {
+			$relative = trim(substr($siteRoot, strlen($documentRoot)), '/');
+			$basePath = $relative !== '' ? '/' . $relative : '';
+			return $basePath;
+		}
+	}
+
+	$scriptName = (string) ($_SERVER['SCRIPT_NAME'] ?? '');
+	$scriptPath = '/' . trim(str_replace('\\', '/', $scriptName), '/');
+	$knownRoutePrefixes = [
+		'/admin',
+		'/about',
+		'/services',
+		'/contact',
+		'/privacy',
+		'/cookies',
+		'/includes',
+	];
+
+	foreach ($knownRoutePrefixes as $prefix) {
+		$position = strpos($scriptPath, $prefix . '/');
+		if ($position !== false) {
+			$basePath = rtrim(substr($scriptPath, 0, $position), '/');
+			return $basePath === '/' ? '' : $basePath;
+		}
+	}
+
+	$directory = trim((string) dirname($scriptPath), '/');
+	$basePath = $directory !== '' ? '/' . $directory : '';
+	return $basePath;
+}
+
+function maatlas_site_url($path = '/')
+{
+	$path = (string) $path;
+	if ($path === '') {
+		$path = '/';
+	}
+
+	if (preg_match('#^(?:[a-z][a-z0-9+.-]*:|//|#)#i', $path) === 1) {
+		return $path;
+	}
+
+	$basePath = maatlas_site_base_path();
+	$path = '/' . ltrim($path, '/');
+
+	if ($path === '/') {
+		return $basePath !== '' ? $basePath . '/' : '/';
+	}
+
+	return $basePath . $path;
+}
+
+function maatlas_site_request_path()
+{
+	$requestPath = (string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
+	$requestPath = '/' . ltrim($requestPath, '/');
+	$basePath = maatlas_site_base_path();
+
+	if ($basePath !== '' && ($requestPath === $basePath || strncmp($requestPath, $basePath . '/', strlen($basePath) + 1) === 0)) {
+		$requestPath = substr($requestPath, strlen($basePath));
+		$requestPath = $requestPath === '' ? '/' : $requestPath;
+	}
+
+	return '/' . ltrim($requestPath, '/');
+}
+
 function maatlas_site_settings_default()
 {
 	return [
@@ -123,6 +207,7 @@ function maatlas_site_render_public_runtime_settings($settings = null)
 		'instagramUrl' => trim((string) ($settings['instagram_url'] ?? '')) !== ''
 			? trim((string) ($settings['instagram_url'] ?? ''))
 			: (string) ($defaults['instagram_url'] ?? ''),
+		'basePath' => maatlas_site_base_path(),
 		'backToTopEnabled' => !empty($settings['back_to_top_enabled']),
 		'backToTopPosition' => (string) ($settings['back_to_top_position'] ?? 'bottom-right'),
 		'backToTopMarginX' => max(8, min(240, (int) ($settings['back_to_top_margin_x'] ?? ($settings['back_to_top_offset'] ?? 24)))),

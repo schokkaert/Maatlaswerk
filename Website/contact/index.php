@@ -105,12 +105,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Contact | W&amp;S Maatlaswerk</title>
 	<meta name="description" content="Neem contact op met W&amp;S Maatlaswerk in Kluisbergen voor maatwerk in staal, inox, aluminium en glas.">
-	<link rel="stylesheet" href="/assets/themes/bluehost-blueprint/style.css?ver=2.0.4">
+	<link rel="stylesheet" href="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/style.css?ver=2.0.4'), ENT_QUOTES, 'UTF-8'); ?>">
 	<?php maatlas_site_render_theme_style($settings); ?>
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13-150x150.jpg" sizes="32x32">
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13.jpg" sizes="192x192">
-	<link rel="apple-touch-icon" href="/assets/uploads/static/MaatLasWerk-13.jpg">
-	<meta name="msapplication-TileImage" content="/assets/uploads/static/MaatLasWerk-13.jpg">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13-150x150.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="32x32">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="192x192">
+	<link rel="apple-touch-icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>">
+	<meta name="msapplication-TileImage" content="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 <body>
 <div class="site-site-blocks">
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 					<?php if ($errorMessage !== null): ?>
 					<p class="maatlas-public-alert maatlas-public-alert-error"><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8'); ?></p>
 					<?php endif; ?>
-					<form class="maatlas-contact-form" action="/contact/index.php" method="post">
+					<form class="maatlas-contact-form" action="<?= htmlspecialchars(maatlas_site_url('/contact/index.php'), ENT_QUOTES, 'UTF-8'); ?>" method="post">
 						<div class="maatlas-form-grid">
 							<label class="maatlas-form-field">
 								<span>Naam</span>
@@ -164,11 +164,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 						</label>
 						<div class="maatlas-contact-privacy-box">
 							<strong>Privacy bij jouw aanvraag</strong>
-							<p>We gebruiken jouw gegevens alleen om je aanvraag te behandelen. Meer uitleg vind je in onze <a href="/privacy/">privacyverklaring</a> en het <a href="/cookies/">cookiebeleid</a>.</p>
+							<p>We gebruiken jouw gegevens alleen om je aanvraag te behandelen. Meer uitleg vind je in onze <a href="<?= htmlspecialchars(maatlas_site_url('/privacy/'), ENT_QUOTES, 'UTF-8'); ?>">privacyverklaring</a> en het <a href="<?= htmlspecialchars(maatlas_site_url('/cookies/'), ENT_QUOTES, 'UTF-8'); ?>">cookiebeleid</a>.</p>
 						</div>
 						<label class="maatlas-contact-consent">
 							<input type="checkbox" name="privacy_consent" value="1" required>
-							<span>Ik heb de <a href="/privacy/">privacyverklaring</a> gelezen en geef toestemming om mijn gegevens te gebruiken voor het beantwoorden van mijn aanvraag.</span>
+							<span>Ik heb de <a href="<?= htmlspecialchars(maatlas_site_url('/privacy/'), ENT_QUOTES, 'UTF-8'); ?>">privacyverklaring</a> gelezen en geef toestemming om mijn gegevens te gebruiken voor het beantwoorden van mijn aanvraag.</span>
 						</label>
 						<p class="maatlas-contact-legal-note">We gebruiken jouw gegevens alleen om jouw aanvraag te behandelen en bewaren contactaanvragen maximaal <?= $privacyRetentionMonths; ?> maanden, tenzij een lopende opdracht of wettelijke verplichting een langere bewaring vereist. Voor privacyvragen kan je terecht via <a href="mailto:<?= htmlspecialchars($privacyContactEmail, ENT_QUOTES, 'UTF-8'); ?>"><?= htmlspecialchars($privacyContactEmail, ENT_QUOTES, 'UTF-8'); ?></a>.</p>
 						<div class="maatlas-button-row maatlas-contact-form-actions">
@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 						<div class="maatlas-contact-map-frame">
 							<iframe src="<?= htmlspecialchars($mapEmbedUrl, ENT_QUOTES, 'UTF-8'); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Maps kaart"></iframe>
 						</div>
-						<p class="maatlas-contact-legal-note">Op deze pagina is een Google Maps-kaart ingesloten. Daardoor kan Google technische gegevens verwerken zodra de kaart geladen wordt. Meer info vind je in onze <a href="/privacy/">privacyverklaring</a> en het <a href="/cookies/">cookiebeleid</a>.</p>
+						<p class="maatlas-contact-legal-note">Op deze pagina is een Google Maps-kaart ingesloten. Daardoor kan Google technische gegevens verwerken zodra de kaart geladen wordt. Meer info vind je in onze <a href="<?= htmlspecialchars(maatlas_site_url('/privacy/'), ENT_QUOTES, 'UTF-8'); ?>">privacyverklaring</a> en het <a href="<?= htmlspecialchars(maatlas_site_url('/cookies/'), ENT_QUOTES, 'UTF-8'); ?>">cookiebeleid</a>.</p>
 					</article>
 
 					<div class="maatlas-contact-grid">
@@ -211,6 +211,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	</main>
 </div>
 <?php maatlas_site_render_public_runtime_settings($settings); ?>
-<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-3"></script>
+<script src="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-4'), ENT_QUOTES, 'UTF-8'); ?>"></script>
 </body>
 </html>

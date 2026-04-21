@@ -25,12 +25,12 @@ $primaryCaption = $primaryMedia !== null ? trim((string) ($primaryMedia['title']
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?= htmlspecialchars($categoryName, ENT_QUOTES, 'UTF-8'); ?> | Diensten | W&amp;S Maatlaswerk</title>
 	<meta name="description" content="Bekijk de realisaties en foto&apos;s binnen de categorie <?= htmlspecialchars($categoryName, ENT_QUOTES, 'UTF-8'); ?> van W&amp;S Maatlaswerk.">
-	<link rel="stylesheet" href="/assets/themes/bluehost-blueprint/style.css?ver=2.0.4">
+	<link rel="stylesheet" href="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/style.css?ver=2.0.4'), ENT_QUOTES, 'UTF-8'); ?>">
 	<?php maatlas_site_render_theme_style($settings); ?>
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13-150x150.jpg" sizes="32x32">
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13.jpg" sizes="192x192">
-	<link rel="apple-touch-icon" href="/assets/uploads/static/MaatLasWerk-13.jpg">
-	<meta name="msapplication-TileImage" content="/assets/uploads/static/MaatLasWerk-13.jpg">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13-150x150.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="32x32">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="192x192">
+	<link rel="apple-touch-icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>">
+	<meta name="msapplication-TileImage" content="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 <body>
 <div class="site-site-blocks">
@@ -39,9 +39,9 @@ $primaryCaption = $primaryMedia !== null ? trim((string) ($primaryMedia['title']
 			<div class="maatlas-section-heading maatlas-section-heading-wide">
 				<p class="maatlas-eyebrow">Diensten</p>
 				<nav class="maatlas-breadcrumb" aria-label="Breadcrumb">
-					<a href="/">Home</a>
+					<a href="<?= htmlspecialchars(maatlas_site_url('/'), ENT_QUOTES, 'UTF-8'); ?>">Home</a>
 					<span>/</span>
-					<a href="/services/">Diensten</a>
+					<a href="<?= htmlspecialchars(maatlas_site_url('/services/'), ENT_QUOTES, 'UTF-8'); ?>">Diensten</a>
 					<span>/</span>
 					<strong><?= htmlspecialchars($categoryName, ENT_QUOTES, 'UTF-8'); ?></strong>
 				</nav>
@@ -108,7 +108,7 @@ $primaryCaption = $primaryMedia !== null ? trim((string) ($primaryMedia['title']
 	</main>
 </div>
 <?php maatlas_site_render_public_runtime_settings($settings); ?>
-<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-3"></script>
+<script src="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-4'), ENT_QUOTES, 'UTF-8'); ?>"></script>
 <script>
 (function () {
   var gallery = document.querySelector('.maatlas-service-detail-gallery');

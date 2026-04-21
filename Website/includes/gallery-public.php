@@ -74,7 +74,7 @@ function maatlas_public_media_url($relativePath)
 {
 	$relativePath = maatlas_public_normalize_relative_path($relativePath);
 	$segments = array_map('rawurlencode', explode('/', $relativePath));
-	return '/assets/uploads/' . implode('/', $segments);
+	return maatlas_site_url('/assets/uploads/' . implode('/', $segments));
 }
 
 function maatlas_public_resized_variant_meta($filename)
@@ -328,7 +328,7 @@ function maatlas_public_media_by_category_id(array $mediaItems, $categoryId)
 function maatlas_public_category_detail_url($categorySlug)
 {
 	$categorySlug = maatlas_public_slugify($categorySlug);
-	return '/services/detail.php?category=' . rawurlencode($categorySlug);
+	return maatlas_site_url('/services/detail.php?category=' . rawurlencode($categorySlug));
 }
 
 function maatlas_public_pick_random_item(array $items)

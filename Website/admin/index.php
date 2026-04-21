@@ -40,19 +40,19 @@ maatlas_admin_render_header('Dashboard', $currentAdmin);
 		<p class="maatlas-admin-eyebrow">Beheer</p>
 		<h2>Administrators</h2>
 		<p>Beheer gebruikersnamen, e-mailadressen, rollen, status en wachtwoorden vanuit één beheerscherm.</p>
-		<p><a class="maatlas-admin-button" href="/admin/administrators.php">Open administratorbeheer</a></p>
+		<p><a class="maatlas-admin-button" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/administrators.php')); ?>">Open administratorbeheer</a></p>
 	</article>
 	<article class="maatlas-admin-card">
 		<p class="maatlas-admin-eyebrow">Galerij</p>
 		<h2>Foto&apos;s en albums</h2>
 		<p>Upload afbeeldingen rechtstreeks naar <strong>assets/uploads</strong>, roteer ze met preview en deel ze in via albums.</p>
-		<p><a class="maatlas-admin-button" href="/admin/gallery.php">Open galerijbeheer</a></p>
+		<p><a class="maatlas-admin-button" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/gallery.php')); ?>">Open galerijbeheer</a></p>
 	</article>
 	<article class="maatlas-admin-card">
 		<p class="maatlas-admin-eyebrow">Mobiel</p>
 		<h2>Snelle foto-upload</h2>
 		<p>Gebruik een eenvoudige pagina op gsm om een foto te nemen, een album te kiezen en die meteen gecomprimeerd naar de site te uploaden.</p>
-		<p><a class="maatlas-admin-button" href="/admin/mobile-upload.php">Open mobiele upload</a></p>
+		<p><a class="maatlas-admin-button" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/mobile-upload.php')); ?>">Open mobiele upload</a></p>
 		<div class="maatlas-mobile-upload-access">
 			<img src="<?= maatlas_admin_h($mobileUploadQrUrl); ?>" alt="QR-code voor mobiele uploadpagina">
 			<div>
@@ -65,13 +65,13 @@ maatlas_admin_render_header('Dashboard', $currentAdmin);
 		<p class="maatlas-admin-eyebrow">Instellingen</p>
 		<h2>Contact, GDPR en cookies</h2>
 		<p>Beheer het ontvangstadres van het contactformulier, publieke contactgegevens, Google Maps en de privacy-instellingen van de website.</p>
-		<p><a class="maatlas-admin-button" href="/admin/settings.php">Open instellingen</a></p>
+		<p><a class="maatlas-admin-button" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/settings.php')); ?>">Open instellingen</a></p>
 	</article>
 	<article class="maatlas-admin-card">
 		<p class="maatlas-admin-eyebrow">Lastenboek</p>
 		<h2>Specificaties en posten</h2>
 		<p>Beheer de documentkop, rubrieken en technische posten van het lastenboek vanuit één apart beheerscherm.</p>
-		<p><a class="maatlas-admin-button" href="/admin/lastenboek.php">Open lastenboek</a></p>
+		<p><a class="maatlas-admin-button" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/lastenboek.php')); ?>">Open lastenboek</a></p>
 	</article>
 </section>
 

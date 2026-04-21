@@ -11,12 +11,12 @@ $settings = maatlas_site_settings_load();
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Over ons | W&amp;S Maatlaswerk</title>
 	<meta name="description" content="Ontdek W&amp;S Maatlaswerk uit Kluisbergen en onze aanpak in staal, inox, aluminium en glas op maat.">
-	<link rel="stylesheet" href="/assets/themes/bluehost-blueprint/style.css?ver=2.0.4">
+	<link rel="stylesheet" href="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/style.css?ver=2.0.4'), ENT_QUOTES, 'UTF-8'); ?>">
 	<?php maatlas_site_render_theme_style($settings); ?>
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13-150x150.jpg" sizes="32x32">
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13.jpg" sizes="192x192">
-	<link rel="apple-touch-icon" href="/assets/uploads/static/MaatLasWerk-13.jpg">
-	<meta name="msapplication-TileImage" content="/assets/uploads/static/MaatLasWerk-13.jpg">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13-150x150.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="32x32">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="192x192">
+	<link rel="apple-touch-icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>">
+	<meta name="msapplication-TileImage" content="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 <body>
 <div class="site-site-blocks">
@@ -50,13 +50,13 @@ $settings = maatlas_site_settings_load();
 					<p>Van een stalen deur tot een volledige buitentoepassing: we bekijken graag welke oplossing technisch en esthetisch het best werkt voor jouw project.</p>
 				</div>
 				<div class="maatlas-cta-actions">
-					<a class="maatlas-button" href="/contact/">Contacteer ons</a>
+					<a class="maatlas-button" href="<?= htmlspecialchars(maatlas_site_url('/contact/'), ENT_QUOTES, 'UTF-8'); ?>">Contacteer ons</a>
 				</div>
 			</div>
 		</section>
 	</main>
 </div>
 <?php maatlas_site_render_public_runtime_settings($settings); ?>
-<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-3"></script>
+<script src="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-4'), ENT_QUOTES, 'UTF-8'); ?>"></script>
 </body>
 </html>

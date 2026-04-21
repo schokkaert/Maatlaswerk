@@ -13,7 +13,7 @@ $allMedia = maatlas_public_gallery_media();
 $projectMedia = $allMedia;
 $categoryShowcaseItems = maatlas_public_gallery_category_entries($projectMedia, $categories, 6);
 
-$heroImageUrl = '/assets/uploads/static/MaatLasWerk-13.jpg';
+$heroImageUrl = maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg');
 $heroMedia = maatlas_public_pick_random_media($projectMedia);
 if ($heroMedia !== null) {
 	$heroImageUrl = (string) $heroMedia['url'];
@@ -26,12 +26,12 @@ if ($heroMedia !== null) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>W&amp;S Maatlaswerk | Staal en glas op maat</title>
 	<meta name="description" content="W&amp;S Maatlaswerk uit Kluisbergen maakt ramen, deuren, balustrades en metaalwerk op maat in staal, inox, aluminium en glas.">
-	<link rel="stylesheet" href="/assets/themes/bluehost-blueprint/style.css?ver=2.0.4">
+	<link rel="stylesheet" href="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/style.css?ver=2.0.4'), ENT_QUOTES, 'UTF-8'); ?>">
 	<?php maatlas_site_render_theme_style($settings); ?>
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13-150x150.jpg" sizes="32x32">
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13.jpg" sizes="192x192">
-	<link rel="apple-touch-icon" href="/assets/uploads/static/MaatLasWerk-13.jpg">
-	<meta name="msapplication-TileImage" content="/assets/uploads/static/MaatLasWerk-13.jpg">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13-150x150.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="32x32">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="192x192">
+	<link rel="apple-touch-icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>">
+	<meta name="msapplication-TileImage" content="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 <body>
 <div class="top-datetime"><?= htmlspecialchars($liveDateTime, ENT_QUOTES, 'UTF-8'); ?></div>
@@ -49,8 +49,8 @@ if ($heroMedia !== null) {
 					<li>Van ontwerp tot plaatsing door een vast aanspreekpunt</li>
 				</ul>
 				<div class="maatlas-button-row">
-					<a class="maatlas-button" href="/about/">Meer over ons</a>
-					<a class="maatlas-button-secondary" href="/contact/">Contacteer ons</a>
+					<a class="maatlas-button" href="<?= htmlspecialchars(maatlas_site_url('/about/'), ENT_QUOTES, 'UTF-8'); ?>">Meer over ons</a>
+					<a class="maatlas-button-secondary" href="<?= htmlspecialchars(maatlas_site_url('/contact/'), ENT_QUOTES, 'UTF-8'); ?>">Contacteer ons</a>
 				</div>
 			</div>
 			<div class="maatlas-hero-media">
@@ -113,13 +113,13 @@ if ($heroMedia !== null) {
 					<p>Stuur ons jouw plannen, afmetingen of referentiebeelden door. We bekijken graag hoe we er een sterke en duurzame uitvoering van maken.</p>
 				</div>
 				<div class="maatlas-cta-actions">
-					<a class="maatlas-button" href="/services/">Bekijk onze diensten</a>
+					<a class="maatlas-button" href="<?= htmlspecialchars(maatlas_site_url('/services/'), ENT_QUOTES, 'UTF-8'); ?>">Bekijk onze diensten</a>
 				</div>
 			</div>
 		</section>
 	</main>
 </div>
 <?php maatlas_site_render_public_runtime_settings($settings); ?>
-<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-3"></script>
+<script src="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-4'), ENT_QUOTES, 'UTF-8'); ?>"></script>
 </body>
 </html>

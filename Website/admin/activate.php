@@ -35,8 +35,7 @@ if ($token === '' || $admin === null) {
 		$admin['last_login_at'] = date('c');
 		maatlas_admin_update($admin);
 		maatlas_admin_login($admin);
-		header('Location: /admin/?activated=1');
-		exit;
+		maatlas_admin_redirect('/admin/?activated=1');
 	}
 }
 
@@ -47,10 +46,10 @@ maatlas_admin_render_header('Account activeren');
 	<h2>Beheerdersaccount activeren</h2>
 	<?php if ($message !== null): ?>
 	<p class="maatlas-admin-alert maatlas-admin-alert-success"><?= maatlas_admin_h($message); ?></p>
-	<p><a class="maatlas-admin-button" href="/admin/login.php">Naar login</a></p>
+	<p><a class="maatlas-admin-button" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/login.php')); ?>">Naar login</a></p>
 	<?php elseif ($error !== null && ($token === '' || $admin === null || !empty($admin['active']) || ($admin !== null && maatlas_admin_is_activation_expired($admin)))): ?>
 	<p class="maatlas-admin-alert maatlas-admin-alert-error"><?= maatlas_admin_h($error); ?></p>
-	<p><a class="maatlas-admin-button maatlas-admin-button-secondary" href="/admin/login.php">Naar login</a></p>
+	<p><a class="maatlas-admin-button maatlas-admin-button-secondary" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/login.php')); ?>">Naar login</a></p>
 	<?php else: ?>
 	<?php if ($error !== null): ?>
 	<p class="maatlas-admin-alert maatlas-admin-alert-error"><?= maatlas_admin_h($error); ?></p>

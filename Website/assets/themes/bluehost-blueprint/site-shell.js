@@ -25,8 +25,27 @@
     return cleaned;
   };
 
-  var currentPath = normalizePath(window.location.pathname);
   var runtimeSettings = window.maatlasSiteSettings || {};
+  var basePath = String(runtimeSettings.basePath || "").replace(/\/+$/, "");
+  var withBase = function (path) {
+    if (!path || path === "/") {
+      return basePath ? basePath + "/" : "/";
+    }
+
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(path)) {
+      return path;
+    }
+
+    return basePath + "/" + String(path).replace(/^\/+/, "");
+  };
+  var stripBase = function (path) {
+    path = "/" + String(path || "").replace(/^\/+/, "");
+    if (basePath && (path === basePath || path.indexOf(basePath + "/") === 0)) {
+      path = path.slice(basePath.length) || "/";
+    }
+    return path;
+  };
+  var currentPath = normalizePath(stripBase(window.location.pathname));
   var vatNumber = (runtimeSettings.vatNumber || "").trim();
   var facebookUrl = (runtimeSettings.facebookUrl || "").trim();
   var instagramUrl = (runtimeSettings.instagramUrl || "").trim();
@@ -77,7 +96,7 @@
         '<a class="maatlas-shell-link' +
         (isCurrent ? " is-current" : "") +
         '" href="' +
-        link.href +
+        withBase(link.href) +
         '">' +
         link.label +
         "</a>"
@@ -88,8 +107,8 @@
   var headerMarkup =
     '<div class="maatlas-site-shell maatlas-site-shell-header">' +
     '<div class="maatlas-shell-inner maatlas-shell-header-inner">' +
-    '<a class="maatlas-shell-brand" href="/">' +
-    '<img class="maatlas-shell-brand-logo" src="/assets/uploads/static/MaatLasWerk-13.jpg?v=20260329-3" alt="W&amp;S Maatlaswerk logo">' +
+    '<a class="maatlas-shell-brand" href="' + withBase("/") + '">' +
+    '<img class="maatlas-shell-brand-logo" src="' + withBase("/assets/uploads/static/MaatLasWerk-13.jpg?v=20260329-3") + '" alt="W&amp;S Maatlaswerk logo">' +
     '<span class="maatlas-shell-brand-text">' +
     '<strong>W&amp;S Maatlaswerk</strong>' +
     '<small>Metaal en glas op maat in Kluisbergen</small>' +
@@ -114,7 +133,7 @@
       .map(function (link) {
         return (
           '<a class="maatlas-shell-legal-link" href="' +
-          link.href +
+          withBase(link.href) +
           '"' +
           (link.external ? ' target="_blank" rel="noopener noreferrer"' : "") +
           ">" +
@@ -137,13 +156,13 @@
           .join("") +
         "</div>"
       : "") +
-    '<a class="maatlas-shell-footer-admin" href="/admin/">Admin</a>' +
+    '<a class="maatlas-shell-footer-admin" href="' + withBase("/admin/") + '">Admin</a>' +
     "</div>" +
     "</div>";
 
   var legalNoticeMarkup =
     '<div class="maatlas-legal-notice" role="note">' +
-    '<p>Deze site gebruikt alleen technisch noodzakelijke cookies. Op de contactpagina wordt een Google Maps-kaart van een externe dienst geladen. Lees onze <a href="/privacy/">privacyverklaring</a> en het <a href="/cookies/">cookiebeleid</a>.</p>' +
+    '<p>Deze site gebruikt alleen technisch noodzakelijke cookies. Op de contactpagina wordt een Google Maps-kaart van een externe dienst geladen. Lees onze <a href="' + withBase("/privacy/") + '">privacyverklaring</a> en het <a href="' + withBase("/cookies/") + '">cookiebeleid</a>.</p>' +
     '<button type="button" class="maatlas-legal-notice-close" aria-label="Sluit melding">Sluiten</button>' +
     "</div>";
 

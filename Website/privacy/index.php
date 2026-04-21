@@ -16,10 +16,10 @@ $privacyRetentionMonths = max(1, (int) ($settings['privacy_retention_months'] ??
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Privacyverklaring | W&amp;S Maatlaswerk</title>
 	<meta name="description" content="Privacyverklaring van W&amp;S Maatlaswerk over de verwerking van persoonsgegevens via de website en het contactformulier.">
-	<link rel="stylesheet" href="/assets/themes/bluehost-blueprint/style.css?ver=2.0.4">
+	<link rel="stylesheet" href="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/style.css?ver=2.0.4'), ENT_QUOTES, 'UTF-8'); ?>">
 	<?php maatlas_site_render_theme_style($settings); ?>
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13-150x150.jpg" sizes="32x32">
-	<link rel="icon" href="/assets/uploads/static/MaatLasWerk-13.jpg" sizes="192x192">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13-150x150.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="32x32">
+	<link rel="icon" href="<?= htmlspecialchars(maatlas_site_url('/assets/uploads/static/MaatLasWerk-13.jpg'), ENT_QUOTES, 'UTF-8'); ?>" sizes="192x192">
 </head>
 <body>
 <div class="site-site-blocks">
@@ -95,6 +95,6 @@ $privacyRetentionMonths = max(1, (int) ($settings['privacy_retention_months'] ??
 	</main>
 </div>
 <?php maatlas_site_render_public_runtime_settings($settings); ?>
-<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-3"></script>
+<script src="<?= htmlspecialchars(maatlas_site_url('/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-4'), ENT_QUOTES, 'UTF-8'); ?>"></script>
 </body>
 </html>

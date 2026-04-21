@@ -48,24 +48,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Snelle upload | Admin | W&amp;S Maatlaswerk</title>
-	<link rel="stylesheet" href="/admin/style.css?v=20260331-1">
+	<link rel="stylesheet" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/style.css?v=20260331-1')); ?>">
 	<?php maatlas_site_render_theme_style($settings); ?>
-	<link rel="manifest" href="/admin/mobile-upload.webmanifest?v=20260330-1">
+	<link rel="manifest" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/mobile-upload.webmanifest.php?v=20260421-1')); ?>">
 	<meta name="theme-color" content="#B0CD56">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="default">
 	<meta name="apple-mobile-web-app-title" content="Maatlas Upload">
-	<link rel="apple-touch-icon" href="/assets/uploads/static/MaatLasWerk-13.jpg">
+	<link rel="apple-touch-icon" href="<?= maatlas_admin_h(maatlas_admin_url('/assets/uploads/static/MaatLasWerk-13.jpg')); ?>">
 </head>
 <body class="maatlas-mobile-upload-page">
 	<div class="maatlas-mobile-simple-shell">
 		<div class="maatlas-mobile-simple-topbar">
-			<a href="/admin/logout.php">Afmelden</a>
+			<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/logout.php')); ?>">Afmelden</a>
 		</div>
 
 		<section class="maatlas-mobile-simple-card">
 			<div class="maatlas-mobile-simple-logo">
-				<img src="/assets/uploads/static/MaatLasWerk-13.jpg" alt="W&amp;S Maatlaswerk logo">
+				<img src="<?= maatlas_admin_h(maatlas_admin_url('/assets/uploads/static/MaatLasWerk-13.jpg')); ?>" alt="W&amp;S Maatlaswerk logo">
 			</div>
 			<p class="maatlas-admin-eyebrow">Snelle upload</p>
 			<h1 class="maatlas-mobile-simple-title">Foto uploaden</h1>
@@ -286,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   });
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/admin/mobile-upload-sw.js').catch(function () {
+    navigator.serviceWorker.register('<?= maatlas_admin_h(maatlas_admin_url('/admin/mobile-upload-sw.js')); ?>').catch(function () {
       return null;
     });
   }

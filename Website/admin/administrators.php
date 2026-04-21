@@ -92,8 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 							maatlas_admin_update($newAdmin);
 							maatlas_admin_login($newAdmin);
 							maatlas_admin_delete_temporary_accounts();
-							header('Location: /admin/?setup=complete');
-							exit;
+							maatlas_admin_redirect('/admin/?setup=complete');
 						}
 						if ($activationMode === 'confirm' && $activationUrl !== null) {
 							$mailSent = maatlas_admin_send_activation_mail($newAdmin, $currentAdmin, $activationUrl);
@@ -303,7 +302,7 @@ maatlas_admin_render_header('Administrators', $currentAdmin);
 			<div class="maatlas-admin-actions">
 				<button type="submit" class="maatlas-admin-button"><?= $editingAdmin === null ? 'Toevoegen' : 'Opslaan'; ?></button>
 				<?php if ($editingAdmin !== null && !$isInitialSetup): ?>
-				<a class="maatlas-admin-button maatlas-admin-button-secondary" href="/admin/administrators.php">Nieuwe administrator</a>
+				<a class="maatlas-admin-button maatlas-admin-button-secondary" href="<?= maatlas_admin_h(maatlas_admin_url('/admin/administrators.php')); ?>">Nieuwe administrator</a>
 				<?php endif; ?>
 			</div>
 		</form>
@@ -343,7 +342,7 @@ maatlas_admin_render_header('Administrators', $currentAdmin);
 						<td><?= maatlas_admin_h($admin['last_login_at'] ? date('d/m/Y H:i', strtotime((string) $admin['last_login_at'])) : 'nog niet'); ?></td>
 						<td>
 							<div class="maatlas-admin-table-actions">
-								<a href="/admin/administrators.php?edit=<?= maatlas_admin_h((string) $admin['id']); ?>">Bewerken</a>
+								<a href="<?= maatlas_admin_h(maatlas_admin_url('/admin/administrators.php?edit=' . rawurlencode((string) $admin['id']))); ?>">Bewerken</a>
 								<?php if (empty($admin['active']) && empty($admin['is_temporary'])): ?>
 								<form method="post">
 									<input type="hidden" name="csrf_token" value="<?= maatlas_admin_h(maatlas_admin_csrf_token()); ?>">
