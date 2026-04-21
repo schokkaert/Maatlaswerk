@@ -137,23 +137,117 @@ Beveiligingsregels:
       ),
       4 => 
       array (
+        'id' => 'lb-admin-interface',
+        'rubric' => 'Admin',
+        'code' => '03.03',
+        'title' => 'Admininterface, statusbalken en bedieningselementen',
+        'content' => 'Doel: naast de functionele workflow moet ook de zichtbare admininterface opnieuw opgebouwd kunnen worden.
+
+Globale adminlayout:
+1. Alle adminpagina’s gebruiken `maatlas_admin_render_header()` en `maatlas_admin_render_footer()` uit `admin/bootstrap.php`.
+2. Wanneer een gebruiker is aangemeld, krijgt de pagina de layoutklasse `maatlas-admin-shell-layout`.
+3. De hoofdindeling bestaat uit een vaste zijbalk links en een inhoudsgebied rechts.
+4. Niet-aangemelde pagina’s zoals login en activatie gebruiken dezelfde publieke header/footer, maar zonder adminzijbalk.
+
+Floating status bovenaan:
+1. Na login toont elke adminpagina een zwevende statusbalk met klasse `maatlas-admin-floating-status`.
+2. De statusbalk bevat de tekst `U bent aangemeld`.
+3. De balk toont gebruikersnaam en rol: `Gebruiker: ... | Rol: ...`.
+4. Rechts in de balk staat een directe link `Uitloggen`.
+5. De statusbalk gebruikt `role="status"` en `aria-live="polite"` zodat statusinformatie semantisch beschikbaar is.
+6. Op mobiel verandert de floating status van rijlayout naar compacte kolomlayout.
+
+Zijmenu:
+1. Ingelogde gebruikers zien links `maatlas-admin-sidebar`.
+2. De zijbalk toont de site-identiteit, korte instructietekst, huidige naam en rol.
+3. Navigatie-items zijn Dashboard, Beheerders, Galerij, Mobiele upload, Lastenboek en Instellingen.
+4. Het actieve menu-item krijgt klasse `is-current`.
+5. Onderaan staat een aparte logoutlink `maatlas-admin-sidebar-logout`.
+
+Galerij-submenu:
+1. Op de galerijpagina kan de zijbalk een submenu tonen.
+2. Het submenu gebruikt `data-submenu-toggle="gallery"` en `aria-expanded`.
+3. De toggleknop gebruikt klasse `maatlas-admin-sidebar-toggle`.
+4. De visuele pijl zit in `maatlas-admin-sidebar-toggle-icon`.
+5. JavaScript in de footer schakelt de klasse `is-collapsed` op het submenu.
+
+Wachtwoordknoppen:
+1. Wachtwoordvelden gebruiken `maatlas-admin-password-row`.
+2. De toon/verbergknop gebruikt `data-password-toggle`.
+3. JavaScript zoekt het doelveld via het id in `data-password-toggle`.
+4. De knop wisselt tussen `Toon wachtwoord` en `Verberg wachtwoord`.
+5. `aria-pressed` wordt aangepast naar `true` of `false`.
+
+Actieknoppen:
+1. Primaire acties gebruiken `maatlas-admin-button`.
+2. Secundaire acties gebruiken `maatlas-admin-button-secondary`.
+3. Gevaarlijke acties zoals verwijderen gebruiken `maatlas-admin-button-danger` of tabelknoppen met bevestiging.
+4. Tabelacties worden gegroepeerd in `maatlas-admin-table-actions`.
+5. Bij verwijderen wordt een browserconfirmatie gebruikt waar dit destructief is.
+
+Statusmeldingen:
+1. Succesmeldingen gebruiken `maatlas-admin-alert maatlas-admin-alert-success`.
+2. Foutmeldingen gebruiken `maatlas-admin-alert maatlas-admin-alert-error`.
+3. Deze meldingen staan bovenaan de relevante beheerpagina.
+4. Voorbeelden zijn ongeldige CSRF-token, verzonden activatiemail, ongeldige login of geslaagde opslag.
+
+Badges en statuslabels:
+1. Kleine statuslabels gebruiken `maatlas-admin-badge`.
+2. In het lastenboek wordt hiermee de status van een item getoond, bijvoorbeeld `concept`, `te-bekijken` of `goedgekeurd`.
+3. In beheerdersoverzichten wordt status als tekst weergegeven: `actief`, `inactief` of `wacht op bevestiging`.
+4. Bij activatielinks wordt ook `vervallen` vermeld wanneer de link niet meer geldig is.
+
+Beheerdersscherm:
+1. Het formulier bevat velden voor gebruikersnaam, volledige naam, e-mail, rol en activatiemethode.
+2. Bij directe activatie verschijnen startwachtwoordvelden.
+3. Bij e-mailactivatie mogen wachtwoordvelden leeg blijven.
+4. De beheerder kan vanuit het overzicht opnieuw een activatiemail verzenden.
+5. De laatste actieve beheerder kan niet verwijderd of gedeactiveerd worden.
+
+Dashboardkaarten:
+1. Het dashboard gebruikt kaarten om aantallen en snelkoppelingen te tonen.
+2. Kaarten bevatten beheerders, actieve accounts, galerij, mobiele upload, instellingen en lastenboek.
+3. De mobiele uploadkaart toont een QR-code naar `/admin/mobile-upload.php`.
+
+Mobiele uploadinterface:
+1. Mobiele upload gebruikt een grote uploadknop met klasse `maatlas-mobile-upload-picker-button`.
+2. Uploadstatus wordt getoond met `maatlas-mobile-upload-status`.
+3. Succes en fouten krijgen aparte klassen `is-success` en `is-error`.
+4. De pagina is bedoeld voor gebruik op smartphone en bevat een manifest en service worker.
+
+Public shell binnen admin:
+1. Adminpagina’s behouden dezelfde publieke header en footer als de website.
+2. De footer bevat links naar Privacyverklaring, Cookiebeleid, sociale profielen en de adminlink.
+3. De materialenregel in de footer bevat een vaste regelbreuk: `Materialen met profielen van<br>Forster Systems. Bekijk onze dealerfiche.`
+
+Belangrijke CSS-klassen:
+- `maatlas-admin-floating-status`
+- `maatlas-admin-sidebar`
+- `maatlas-admin-sidebar-toggle`
+- `maatlas-admin-sidebar-submenu`
+- `maatlas-admin-button`
+- `maatlas-admin-button-secondary`
+- `maatlas-admin-button-danger`
+- `maatlas-admin-alert-success`
+- `maatlas-admin-alert-error`
+- `maatlas-admin-badge`
+- `maatlas-admin-password-row`
+- `maatlas-admin-toggle-password`
+
+Heropbouwregel:
+Bij het opnieuw opbouwen van het admingedeelte moet eerst de beveiligde workflow werken, daarna de visuele adminlayout. De floating status, logoutlinks, zijmenu, actieve menu-aanduiding, meldingen, wachtwoordtoggles en statuslabels horen bij de basisfunctionaliteit en mogen niet als decoratie worden beschouwd.',
+        'status' => 'concept',
+        'position' => 5,
+        'created_at' => '2026-04-21T20:20:00+02:00',
+        'updated_at' => '2026-04-21T20:20:00+02:00',
+      ),
+      5 => 
+      array (
         'id' => 'lb-template-4',
         'rubric' => 'Galerij',
         'code' => '04.01',
         'title' => 'Galerij, categorieen en dynamische inhoud',
         'content' => 'Afbeeldingen worden beheerd onder `assets/uploads` en gekoppeld aan categorieen via de admin. De publieke site leest deze metadata uit de opslagbestanden in `admin/storage/` en bouwt daaruit dynamisch albumoverzichten, detailpagina’s en willekeurige projectbeelden op.',
-        'status' => 'concept',
-        'position' => 5,
-        'created_at' => '2026-03-30T12:00:00+02:00',
-        'updated_at' => '2026-03-30T12:00:00+02:00',
-      ),
-      5 => 
-      array (
-        'id' => 'lb-template-5',
-        'rubric' => 'Formulieren',
-        'code' => '05.01',
-        'title' => 'Contactformulier en mailafhandeling',
-        'content' => 'Het contactformulier op `/contact/` leest zijn ontvanger, afzender, testmodus en publieke contactgegevens uit de admininstellingen. In testmodus worden berichten doorgestuurd naar een testadres; in live modus naar het effectieve ontvangstadres.',
         'status' => 'concept',
         'position' => 6,
         'created_at' => '2026-03-30T12:00:00+02:00',
@@ -161,11 +255,11 @@ Beveiligingsregels:
       ),
       6 => 
       array (
-        'id' => 'lb-template-6',
-        'rubric' => 'Compliance',
-        'code' => '06.01',
-        'title' => 'Privacy, cookies en externe diensten',
-        'content' => 'De website bevat afzonderlijke pagina’s voor privacy en cookies. Externe diensten zoals Google Maps worden publiek vermeld, en de contactpagina bevat de nodige privacytoelichting en toestemmingsverwijzing conform de ingestelde sitegegevens.',
+        'id' => 'lb-template-5',
+        'rubric' => 'Formulieren',
+        'code' => '05.01',
+        'title' => 'Contactformulier en mailafhandeling',
+        'content' => 'Het contactformulier op `/contact/` leest zijn ontvanger, afzender, testmodus en publieke contactgegevens uit de admininstellingen. In testmodus worden berichten doorgestuurd naar een testadres; in live modus naar het effectieve ontvangstadres.',
         'status' => 'concept',
         'position' => 7,
         'created_at' => '2026-03-30T12:00:00+02:00',
@@ -173,13 +267,25 @@ Beveiligingsregels:
       ),
       7 => 
       array (
+        'id' => 'lb-template-6',
+        'rubric' => 'Compliance',
+        'code' => '06.01',
+        'title' => 'Privacy, cookies en externe diensten',
+        'content' => 'De website bevat afzonderlijke pagina’s voor privacy en cookies. Externe diensten zoals Google Maps worden publiek vermeld, en de contactpagina bevat de nodige privacytoelichting en toestemmingsverwijzing conform de ingestelde sitegegevens.',
+        'status' => 'concept',
+        'position' => 8,
+        'created_at' => '2026-03-30T12:00:00+02:00',
+        'updated_at' => '2026-03-30T12:00:00+02:00',
+      ),
+      8 => 
+      array (
         'id' => 'lb-template-7',
         'rubric' => 'Publicatie',
         'code' => '07.01',
         'title' => 'Upload, publicatie en onderhoud',
         'content' => 'Wijzigingen worden lokaal uitgevoerd in `Website/` en daarna gericht geüpload naar de server. Voor onderhoud is het belangrijk dat alleen gewijzigde bestanden worden gepubliceerd en dat oude, overbodige exports of testmappen niet opnieuw worden meegezet.',
         'status' => 'concept',
-        'position' => 8,
+        'position' => 9,
         'created_at' => '2026-03-30T12:00:00+02:00',
         'updated_at' => '2026-03-30T12:00:00+02:00',
       ),
