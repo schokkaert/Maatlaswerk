@@ -1872,13 +1872,102 @@ Bij het opnieuw opbouwen van het admingedeelte moet eerst de beveiligde workflow
 			'updated_at' => $now,
 		],
 		[
+			'id' => 'lb-template-social-media',
+			'rubric' => 'Sociale media',
+			'code' => '05.02',
+			'title' => 'Sociale media opbouw en beheer',
+			'content' => 'Doel: sociale media centraal beheren vanuit de admin en consequent tonen in footer en floating knoppen.
+
+Belangrijkste bestanden:
+- `admin/settings.php`: formulier waarin Facebook- en Instagram-links worden beheerd.
+- `admin/storage/site_settings.php`: opslagbestand met `facebook_url` en `instagram_url`.
+- `includes/site-settings.php`: standaardwaarden, laden/opslaan van instellingen en runtime export naar JavaScript.
+- `assets/themes/bluehost-blueprint/site-shell.js`: bouwt publieke footerlinks en floating social buttons.
+- `assets/themes/bluehost-blueprint/style.css`: styling voor footerlinks en floating social buttons.
+- `admin/bootstrap.php`: adminpagina’s gebruiken dezelfde publieke footer en lezen sociale links uit site-instellingen.
+
+Instellingen in de admin:
+1. Beheerder opent `/admin/settings.php`.
+2. Onder Administratieve instellingen staan de velden `Facebook-link` en `Instagram-link`.
+3. Beide velden gebruiken inputtype `url`.
+4. Lege waarden zijn toegestaan.
+5. Niet-lege waarden worden gevalideerd met `FILTER_VALIDATE_URL`.
+6. Bij opslaan worden de waarden bewaard als `facebook_url` en `instagram_url`.
+
+Standaardwaarden:
+1. `includes/site-settings.php` bevat standaardlinks voor Facebook en Instagram.
+2. `maatlas_site_settings_load()` merge bestaande opslag met standaardwaarden.
+3. Als een opgeslagen link leeg is, gebruikt de publieke runtime de standaardwaarde.
+4. Hierdoor verdwijnen links niet onverwacht wanneer oude instellingen nog geen sociale velden bevatten.
+
+Publieke runtime:
+1. Publieke pagina’s laden `$settings = maatlas_site_settings_load()`.
+2. Vlak voor de shell-JavaScript wordt `maatlas_site_render_public_runtime_settings($settings)` aangeroepen.
+3. Die functie schrijft `window.maatlasSiteSettings`.
+4. In die payload zitten `facebookUrl` en `instagramUrl`.
+5. `site-shell.js` leest deze waarden via `runtimeSettings.facebookUrl` en `runtimeSettings.instagramUrl`.
+
+Footerlinks:
+1. `site-shell.js` bouwt `socialLinks` op basis van beschikbare URLs.
+2. De footer toont alleen een blok `maatlas-shell-footer-socials` wanneer er minstens één sociale link bestaat.
+3. Elke link krijgt klasse `maatlas-shell-social`.
+4. Labels zijn zichtbaar als `Facebook` en `Instagram`.
+5. Links gebruiken `rel="noopener noreferrer"`.
+
+Floating social buttons:
+1. `site-shell.js` bouwt naast de footer ook `maatlas-floating-socials`.
+2. Elke knop krijgt klasse `maatlas-floating-social`.
+3. Facebook krijgt extra klasse `maatlas-floating-facebook`.
+4. Instagram krijgt extra klasse `maatlas-floating-instagram`.
+5. Iconen worden inline in JavaScript opgebouwd via SVG-markup.
+6. De knoppen worden met `document.body.insertAdjacentHTML("beforeend", floatingSocials)` aan de pagina toegevoegd.
+7. Als er geen sociale links zijn, wordt het floating social blok niet gerenderd.
+
+Styling:
+1. Footerlinks worden gestyled met `maatlas-shell-footer-socials` en `maatlas-shell-social`.
+2. Floating knoppen worden gestyled met `maatlas-floating-socials`, `maatlas-floating-social` en `maatlas-floating-social-icon`.
+3. Platformspecifieke kleuren zitten in `maatlas-floating-facebook` en `maatlas-floating-instagram`.
+4. Hover en focus states zijn voorzien.
+5. Tijdens lightboxgebruik worden floating socials verborgen via `body.maatlas-lightbox-open .maatlas-floating-socials`.
+6. Responsive regels verplaatsen of schalen de knoppen op kleinere schermen.
+
+Adminomgeving:
+1. `admin/bootstrap.php` gebruikt `maatlas_site_settings_load()` in de publieke footer binnen adminpagina’s.
+2. Facebook en Instagram worden daar nu uit `facebook_url` en `instagram_url` gelezen.
+3. Als een adminlink leeg is, valt de footer terug op de standaardwaarde uit `maatlas_site_settings_default()`.
+4. De adminfooter gebruikt dezelfde klassen `maatlas-shell-footer-socials` en `maatlas-shell-social`.
+
+Uitbreiden met extra kanalen:
+1. Voeg een veld toe aan `maatlas_site_settings_default()`.
+2. Voeg opslag en validatie toe in `admin/settings.php`.
+3. Voeg het veld toe aan `admin/storage/site_settings.php` of laat defaults mergen.
+4. Voeg de waarde toe aan `maatlas_site_render_public_runtime_settings()`.
+5. Breid `socialLinks` in `site-shell.js` uit met label, className, ariaLabel en icon.
+6. Voeg CSS toe voor platformkleur en responsive gedrag.
+7. Werk de adminfooter in `admin/bootstrap.php` bij als de link ook daar zichtbaar moet zijn.
+
+Controle na wijziging:
+1. Open `/admin/settings.php` en sla Facebook/Instagram URLs op.
+2. Controleer `/` of `/index.php` op footerlinks.
+3. Controleer of floating knoppen zichtbaar zijn buiten de lightbox.
+4. Controleer `/admin/` of de adminfooter dezelfde sociale links toont.
+5. Controleer mobiel of de knoppen niet over hoofdcontent of formulieren vallen.
+
+Heropbouwregel:
+Sociale media horen niet hardcoded per pagina te staan. De bron is de admininstelling, de publieke pagina’s krijgen de links via runtime settings, en de shell rendert footerlinks en floating buttons centraal.',
+			'status' => 'concept',
+			'position' => 8,
+			'created_at' => $now,
+			'updated_at' => $now,
+		],
+		[
 			'id' => 'lb-template-6',
 			'rubric' => 'Compliance',
 			'code' => '06.01',
 			'title' => 'Privacy, cookies en externe diensten',
 			'content' => 'De website bevat afzonderlijke pagina’s voor privacy en cookies. Externe diensten zoals Google Maps worden publiek vermeld, en de contactpagina bevat de nodige privacytoelichting en toestemmingsverwijzing conform de ingestelde sitegegevens.',
 			'status' => 'concept',
-			'position' => 8,
+			'position' => 9,
 			'created_at' => $now,
 			'updated_at' => $now,
 		],
@@ -1889,7 +1978,7 @@ Bij het opnieuw opbouwen van het admingedeelte moet eerst de beveiligde workflow
 			'title' => 'Upload, publicatie en onderhoud',
 			'content' => 'Wijzigingen worden lokaal uitgevoerd in `Website/` en daarna gericht geüpload naar de server. Voor onderhoud is het belangrijk dat alleen gewijzigde bestanden worden gepubliceerd en dat oude, overbodige exports of testmappen niet opnieuw worden meegezet.',
 			'status' => 'concept',
-			'position' => 9,
+			'position' => 10,
 			'created_at' => $now,
 			'updated_at' => $now,
 		],
@@ -1958,7 +2047,14 @@ function maatlas_admin_render_public_shell_header(): void
 function maatlas_admin_render_public_shell_footer(): void
 {
 	$settings = maatlas_site_settings_load();
+	$defaults = maatlas_site_settings_default();
 	$vatNumber = trim((string) ($settings['vat_number'] ?? ''));
+	$facebookUrl = trim((string) ($settings['facebook_url'] ?? '')) !== ''
+		? trim((string) ($settings['facebook_url'] ?? ''))
+		: (string) ($defaults['facebook_url'] ?? '');
+	$instagramUrl = trim((string) ($settings['instagram_url'] ?? '')) !== ''
+		? trim((string) ($settings['instagram_url'] ?? ''))
+		: (string) ($defaults['instagram_url'] ?? '');
 	?>
 <div class="maatlas-site-shell maatlas-site-shell-footer">
 	<div class="maatlas-shell-inner maatlas-shell-footer-inner">
@@ -1979,10 +2075,16 @@ function maatlas_admin_render_public_shell_footer(): void
 			<a class="maatlas-shell-link" href="<?= maatlas_admin_h((string) $link['href']); ?>"><?= maatlas_admin_h((string) $link['label']); ?></a>
 			<?php endforeach; ?>
 		</nav>
+		<?php if ($facebookUrl !== '' || $instagramUrl !== ''): ?>
 		<div class="maatlas-shell-footer-socials">
-			<a class="maatlas-shell-social" href="https://www.facebook.com/p/WS-Maatlaswerk-100054239330706/" rel="noopener noreferrer">Facebook</a>
-			<a class="maatlas-shell-social" href="https://www.instagram.com/w_s_maatlaswerk/" rel="noopener noreferrer">Instagram</a>
+			<?php if ($facebookUrl !== ''): ?>
+			<a class="maatlas-shell-social" href="<?= maatlas_admin_h($facebookUrl); ?>" rel="noopener noreferrer">Facebook</a>
+			<?php endif; ?>
+			<?php if ($instagramUrl !== ''): ?>
+			<a class="maatlas-shell-social" href="<?= maatlas_admin_h($instagramUrl); ?>" rel="noopener noreferrer">Instagram</a>
+			<?php endif; ?>
 		</div>
+		<?php endif; ?>
 		<a class="maatlas-shell-footer-admin" href="/admin/">Admin</a>
 	</div>
 </div>
