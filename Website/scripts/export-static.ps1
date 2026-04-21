@@ -1,6 +1,6 @@
 param(
     [string]$BaseUrl = "http://localhost/maatlaswerk/",
-    [string]$OutputDir = (Join-Path $PSScriptRoot "..\static-site")
+    [string]$OutputDir = (Join-Path $PSScriptRoot "..\_generated-export")
 )
 
 $ErrorActionPreference = "Stop"

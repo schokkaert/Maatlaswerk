@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 require __DIR__ . '/bootstrap.php';
 
-if (maatlas_admin_current() !== null) {
-	header('Location: /admin/');
+$currentAdmin = maatlas_admin_current();
+if ($currentAdmin !== null) {
+	header('Location: ' . (maatlas_admin_is_initial_setup_required() && maatlas_admin_is_temporary($currentAdmin) ? '/admin/administrators.php?setup=1' : '/admin/'));
 	exit;
 }
 
@@ -19,14 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$error = 'Ongeldige beveiligingstoken. Probeer opnieuw.';
 	} else {
 		$admin = maatlas_admin_find_by_username($username);
-		if ($admin === null || empty($admin['active']) || !password_verify($password, (string) $admin['password_hash'])) {
+		if ($admin !== null && empty($admin['active']) && !empty($admin['activation_token_hash'])) {
+			$error = 'Deze account is nog niet actief. Gebruik de activatielink uit de e-mail of vraag een beheerder om een nieuwe uitnodiging.';
+		} elseif ($admin === null || empty($admin['active']) || !password_verify($password, (string) $admin['password_hash'])) {
 			$error = 'De combinatie van gebruikersnaam en wachtwoord klopt niet.';
 		} else {
 			$admin['last_login_at'] = date('c');
 			$admin['updated_at'] = date('c');
 			maatlas_admin_update($admin);
 			maatlas_admin_login($admin);
-			header('Location: /admin/');
+			header('Location: ' . (maatlas_admin_is_initial_setup_required() && maatlas_admin_is_temporary($admin) ? '/admin/administrators.php?setup=1' : '/admin/'));
 			exit;
 		}
 	}
@@ -37,6 +40,9 @@ maatlas_admin_render_header('Admin login');
 <section class="maatlas-admin-auth-card">
 	<p class="maatlas-admin-eyebrow">Aanmelden</p>
 	<h2>Log in op de beheeromgeving</h2>
+	<?php if (maatlas_admin_is_initial_setup_required()): ?>
+	<p class="maatlas-admin-alert maatlas-admin-alert-error">Eerste setup: meld tijdelijk aan met <strong>admin</strong> / <strong>admin</strong>. Maak daarna meteen een eigen beheerder aan; de tijdelijke account wordt automatisch verwijderd.</p>
+	<?php endif; ?>
 	<?php if ($error !== null): ?>
 	<p class="maatlas-admin-alert maatlas-admin-alert-error"><?= maatlas_admin_h($error); ?></p>
 	<?php endif; ?>

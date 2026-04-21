@@ -69,6 +69,6 @@ $serviceAlbums = maatlas_public_gallery_category_entries($projectMedia, $categor
 	</main>
 </div>
 <?php maatlas_site_render_public_runtime_settings($settings); ?>
-<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-2"></script>
+<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-3"></script>
 </body>
 </html>

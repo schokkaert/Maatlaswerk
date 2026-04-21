@@ -91,7 +91,7 @@ return array (
         'rubric' => 'Publicatie',
         'code' => '07.01',
         'title' => 'Upload, publicatie en onderhoud',
-        'content' => 'Wijzigingen worden lokaal uitgevoerd in `Website/static-site/` en daarna gericht geüpload naar de server. Voor onderhoud is het belangrijk dat alleen gewijzigde bestanden worden gepubliceerd en dat oude, overbodige exports of testmappen niet opnieuw worden meegezet.',
+        'content' => 'Wijzigingen worden lokaal uitgevoerd in `Website/` en daarna gericht geüpload naar de server. Voor onderhoud is het belangrijk dat alleen gewijzigde bestanden worden gepubliceerd en dat oude, overbodige exports of testmappen niet opnieuw worden meegezet.',
         'status' => 'concept',
         'position' => 7,
         'created_at' => '2026-03-30T12:00:00+02:00',

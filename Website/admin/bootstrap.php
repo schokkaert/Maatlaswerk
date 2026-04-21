@@ -22,19 +22,24 @@ const MAATLAS_GALLERY_CATEGORIES_STORAGE = __DIR__ . '/storage/gallery_categorie
 const MAATLAS_GALLERY_MEDIA_STORAGE = __DIR__ . '/storage/gallery_media.php';
 const MAATLAS_LASTENBOEK_STORAGE = __DIR__ . '/storage/lastenboek.php';
 const MAATLAS_GALLERY_UPLOADS_DIR = __DIR__ . '/../assets/uploads';
+const MAATLAS_ADMIN_TEMPORARY_USERNAME = 'admin';
+const MAATLAS_ADMIN_TEMPORARY_PASSWORD = 'admin';
 
 function maatlas_admin_storage_default(): array
 {
 	return [
 		[
 			'id' => 'admin-1',
-			'username' => 'setup-admin',
-			'full_name' => 'Tijdelijke Setup Admin',
-			'email' => 'setup@maatlaswerk.be',
+			'username' => MAATLAS_ADMIN_TEMPORARY_USERNAME,
+			'full_name' => 'Tijdelijke Admin',
+			'email' => 'admin@maatlaswerk.be',
 			'role' => 'superadmin',
 			'active' => true,
-			'password_hash' => password_hash('Start!Maatlas-2026', PASSWORD_DEFAULT),
+			'password_hash' => password_hash(MAATLAS_ADMIN_TEMPORARY_PASSWORD, PASSWORD_DEFAULT),
 			'is_temporary' => true,
+			'activation_token_hash' => null,
+			'activation_expires_at' => null,
+			'activated_at' => null,
 			'created_at' => date('c'),
 			'updated_at' => date('c'),
 			'last_login_at' => null,
@@ -104,6 +109,37 @@ function maatlas_admin_save(array $admins): void
 	file_put_contents(MAATLAS_ADMIN_STORAGE, maatlas_admin_php_array_export($admins), LOCK_EX);
 }
 
+function maatlas_admin_real_count(): int
+{
+	$count = 0;
+	foreach (maatlas_admin_load() as $admin) {
+		if (empty($admin['is_temporary'])) {
+			$count++;
+		}
+	}
+
+	return $count;
+}
+
+function maatlas_admin_is_initial_setup_required(): bool
+{
+	return maatlas_admin_real_count() === 0;
+}
+
+function maatlas_admin_is_temporary(array $admin): bool
+{
+	return !empty($admin['is_temporary']);
+}
+
+function maatlas_admin_delete_temporary_accounts(): void
+{
+	$admins = array_values(array_filter(
+		maatlas_admin_load(),
+		static fn(array $admin): bool => empty($admin['is_temporary'])
+	));
+	maatlas_admin_save($admins);
+}
+
 function maatlas_admin_find_by_username(string $username): ?array
 {
 	foreach (maatlas_admin_load() as $admin) {
@@ -119,6 +155,22 @@ function maatlas_admin_find_by_id(string $id): ?array
 {
 	foreach (maatlas_admin_load() as $admin) {
 		if ((string) $admin['id'] === $id) {
+			return $admin;
+		}
+	}
+
+	return null;
+}
+
+function maatlas_admin_find_by_activation_token(string $token): ?array
+{
+	if ($token === '') {
+		return null;
+	}
+
+	$tokenHash = hash('sha256', $token);
+	foreach (maatlas_admin_load() as $admin) {
+		if (!empty($admin['activation_token_hash']) && hash_equals((string) $admin['activation_token_hash'], $tokenHash)) {
 			return $admin;
 		}
 	}
@@ -199,6 +251,20 @@ function maatlas_admin_require_login(): array
 		exit;
 	}
 
+	$currentPath = (string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
+	$allowedSetupPaths = [
+		'/admin/administrators.php',
+		'/admin/logout.php',
+	];
+	if (
+		maatlas_admin_is_initial_setup_required()
+		&& maatlas_admin_is_temporary($current)
+		&& !in_array($currentPath, $allowedSetupPaths, true)
+	) {
+		header('Location: /admin/administrators.php?setup=1');
+		exit;
+	}
+
 	return $current;
 }
 
@@ -220,6 +286,107 @@ function maatlas_admin_verify_csrf(?string $token): bool
 function maatlas_admin_h(?string $value): string
 {
 	return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+}
+
+function maatlas_admin_is_activation_expired(array $admin): bool
+{
+	$expiresAt = trim((string) ($admin['activation_expires_at'] ?? ''));
+	if ($expiresAt === '') {
+		return true;
+	}
+
+	$expiresTimestamp = strtotime($expiresAt);
+	return $expiresTimestamp === false || $expiresTimestamp < time();
+}
+
+function maatlas_admin_password_is_safe(string $password, string $username, int $minimumLength = 12): bool
+{
+	if (strlen($password) < $minimumLength) {
+		return false;
+	}
+
+	$lowerPassword = strtolower($password);
+	$lowerUsername = strtolower($username);
+	return $lowerPassword !== MAATLAS_ADMIN_TEMPORARY_PASSWORD && $lowerPassword !== $lowerUsername;
+}
+
+function maatlas_admin_mail_sender(): string
+{
+	$settings = maatlas_site_settings_load();
+	$candidates = [
+		(string) ($settings['contact_sender_email'] ?? ''),
+		(string) ($settings['public_contact_email'] ?? ''),
+		(string) ($settings['privacy_contact_email'] ?? ''),
+		'info@maatlaswerk.be',
+	];
+
+	foreach ($candidates as $candidate) {
+		$candidate = trim($candidate);
+		if (filter_var($candidate, FILTER_VALIDATE_EMAIL)) {
+			return $candidate;
+		}
+	}
+
+	return 'info@maatlaswerk.be';
+}
+
+function maatlas_admin_send_mail(string $to, string $subject, array $bodyLines): bool
+{
+	if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+		return false;
+	}
+
+	$sender = maatlas_admin_mail_sender();
+	$headers = [
+		'MIME-Version: 1.0',
+		'Content-Type: text/plain; charset=UTF-8',
+		'From: W&S Maatlaswerk <' . $sender . '>',
+		'Reply-To: ' . $sender,
+	];
+
+	return mail($to, preg_replace('/[\r\n]+/', ' ', $subject) ?? $subject, implode("\n", $bodyLines), implode("\r\n", $headers));
+}
+
+function maatlas_admin_send_account_created_mail(array $admin, array $createdBy): bool
+{
+	return maatlas_admin_send_mail(
+		(string) $admin['email'],
+		'Je beheerdersaccount voor W&S Maatlaswerk is aangemaakt',
+		[
+			'Hallo ' . (string) $admin['full_name'],
+			'',
+			'Er is een beheerdersaccount voor jou aangemaakt op de website van W&S Maatlaswerk.',
+			'',
+			'Gebruikersnaam: ' . (string) $admin['username'],
+			'Status: actief',
+			'Aangemaakt door: ' . (string) ($createdBy['full_name'] ?? $createdBy['username'] ?? 'beheerder'),
+			'',
+			'Je wachtwoord wordt niet per e-mail verstuurd. Vraag het wachtwoord rechtstreeks aan de beheerder die de account heeft aangemaakt.',
+			'',
+			'Login: ' . maatlas_admin_current_host_url('/admin/login.php'),
+		]
+	);
+}
+
+function maatlas_admin_send_activation_mail(array $admin, array $createdBy, string $activationUrl): bool
+{
+	return maatlas_admin_send_mail(
+		(string) $admin['email'],
+		'Activeer je beheerdersaccount voor W&S Maatlaswerk',
+		[
+			'Hallo ' . (string) $admin['full_name'],
+			'',
+			'Er is een beheerdersaccount voor jou aangemaakt op de website van W&S Maatlaswerk.',
+			'',
+			'Gebruikersnaam: ' . (string) $admin['username'],
+			'Aangemaakt door: ' . (string) ($createdBy['full_name'] ?? $createdBy['username'] ?? 'beheerder'),
+			'',
+			'Activeer je account en kies zelf een wachtwoord via deze link:',
+			$activationUrl,
+			'',
+			'Deze link vervalt op: ' . date('d/m/Y H:i', strtotime((string) ($admin['activation_expires_at'] ?? 'now'))),
+		]
+	);
 }
 
 function maatlas_gallery_slugify(string $value): string
@@ -1530,7 +1697,7 @@ function maatlas_lastenboek_template_items(): array
 			'rubric' => 'Publicatie',
 			'code' => '07.01',
 			'title' => 'Upload, publicatie en onderhoud',
-			'content' => 'Wijzigingen worden lokaal uitgevoerd in `Website/static-site/` en daarna gericht geüpload naar de server. Voor onderhoud is het belangrijk dat alleen gewijzigde bestanden worden gepubliceerd en dat oude, overbodige exports of testmappen niet opnieuw worden meegezet.',
+			'content' => 'Wijzigingen worden lokaal uitgevoerd in `Website/` en daarna gericht geüpload naar de server. Voor onderhoud is het belangrijk dat alleen gewijzigde bestanden worden gepubliceerd en dat oude, overbodige exports of testmappen niet opnieuw worden meegezet.',
 			'status' => 'concept',
 			'position' => 7,
 			'created_at' => $now,
@@ -1608,7 +1775,7 @@ function maatlas_admin_render_public_shell_footer(): void
 		<div class="maatlas-shell-footer-copy">
 			<strong>W&amp;S Maatlaswerk</strong>
 			<p>Maatwerk in staal, inox, aluminium en glas voor particuliere en professionele projecten.</p>
-			<p class="maatlas-shell-footer-materials">Materialen met profielen van <a href="https://www.forstersystems.be" target="_blank" rel="noopener noreferrer">Forster Systems</a>. <a href="https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken" target="_blank" rel="noopener noreferrer">Bekijk onze dealerfiche</a>.</p>
+			<p class="maatlas-shell-footer-materials">Materialen met profielen van<br><a href="https://www.forstersystems.be" target="_blank" rel="noopener noreferrer">Forster Systems</a>. <a href="https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken" target="_blank" rel="noopener noreferrer">Bekijk onze dealerfiche</a>.</p>
 			<?php if ($vatNumber !== ''): ?>
 			<p>BTW: <?= maatlas_admin_h($vatNumber); ?></p>
 			<?php endif; ?>

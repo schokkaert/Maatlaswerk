@@ -6,15 +6,23 @@ require __DIR__ . '/bootstrap.php';
 $currentAdmin = maatlas_admin_require_login();
 $admins = maatlas_admin_load();
 $activeAdmins = array_values(array_filter($admins, static fn(array $admin): bool => !empty($admin['active'])));
-$hasRealAdmin = count(array_filter($admins, static fn(array $admin): bool => empty($admin['is_temporary']))) > 0;
+$hasRealAdmin = !maatlas_admin_is_initial_setup_required();
 $showFirstAccessNotice = !$hasRealAdmin;
+$setupCompleted = (string) ($_GET['setup'] ?? '') === 'complete';
+$activationCompleted = (string) ($_GET['activated'] ?? '') === '1';
 $mobileUploadUrl = maatlas_admin_current_host_url('/admin/mobile-upload.php');
 $mobileUploadQrUrl = maatlas_admin_qr_image_url($mobileUploadUrl);
 
 maatlas_admin_render_header('Dashboard', $currentAdmin);
 ?>
+<?php if ($setupCompleted): ?>
+<p class="maatlas-admin-alert maatlas-admin-alert-success">De nieuwe beheerder is aangemaakt en de tijdelijke account <strong>admin</strong> is verwijderd.</p>
+<?php endif; ?>
+<?php if ($activationCompleted): ?>
+<p class="maatlas-admin-alert maatlas-admin-alert-success">Je account is geactiveerd. Je bent nu aangemeld.</p>
+<?php endif; ?>
 <?php if (!empty($currentAdmin['is_temporary']) && $showFirstAccessNotice): ?>
-<p class="maatlas-admin-alert maatlas-admin-alert-error">Je bent ingelogd met de tijdelijke setup-account. Maak eerst een nieuwe administrator aan, log daarna in met die nieuwe gebruiker en verwijder vervolgens deze setup-account.</p>
+<p class="maatlas-admin-alert maatlas-admin-alert-error">Je bent ingelogd met de tijdelijke setup-account. Maak eerst een nieuwe administrator aan. De tijdelijke account wordt daarna automatisch verwijderd.</p>
 <?php endif; ?>
 
 <section class="maatlas-admin-grid">
@@ -71,9 +79,9 @@ maatlas_admin_render_header('Dashboard', $currentAdmin);
 <section class="maatlas-admin-card">
 	<p class="maatlas-admin-eyebrow">Inloggegevens</p>
 	<h2>Eerste toegang</h2>
-	<p>Tijdelijke login: <strong>setup-admin</strong></p>
-	<p>Tijdelijk wachtwoord: <strong>Start!Maatlas-2026</strong></p>
-	<p>Gebruik deze account alleen voor de eerste login. Maak meteen een nieuwe administrator aan, log daarna opnieuw in met die nieuwe gebruiker en verwijder vervolgens de setup-account.</p>
+	<p>Tijdelijke login: <strong>admin</strong></p>
+	<p>Tijdelijk wachtwoord: <strong>admin</strong></p>
+	<p>Gebruik deze account alleen voor de eerste login. Maak meteen een nieuwe administrator aan; daarna wordt de tijdelijke account automatisch verwijderd.</p>
 </section>
 <?php endif; ?>
 <?php

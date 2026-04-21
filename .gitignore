@@ -2,7 +2,8 @@
 /*.png
 /.DS_Store
 Website/_import/
-Website/static-site/admin/storage/sessions/
+Website/admin/storage/sessions/
+Website/_generated-export/
 Website/index.html.backup.*
 Website/matlas01_bcig1.sql
 Website/testUpload.txt

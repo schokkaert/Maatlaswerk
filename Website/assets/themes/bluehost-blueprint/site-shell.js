@@ -107,7 +107,7 @@
     '<div class="maatlas-shell-footer-copy">' +
     "<strong>W&amp;S Maatlaswerk</strong>" +
     "<p>Maatwerk in staal, inox, aluminium en glas voor particuliere en professionele projecten.</p>" +
-    '<p class="maatlas-shell-footer-materials">Materialen met profielen van <a href="https://www.forstersystems.be" target="_blank" rel="noopener noreferrer">Forster Systems</a>. <a href="https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken" target="_blank" rel="noopener noreferrer">Bekijk onze dealerfiche</a>.</p>' +
+    '<p class="maatlas-shell-footer-materials">Materialen met profielen van<br><a href="https://www.forstersystems.be" target="_blank" rel="noopener noreferrer">Forster Systems</a>. <a href="https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken" target="_blank" rel="noopener noreferrer">Bekijk onze dealerfiche</a>.</p>' +
     (vatNumber ? "<p>BTW: " + vatNumber + "</p>" : "") +
     '<div class="maatlas-shell-footer-legal">' +
     legalLinks
