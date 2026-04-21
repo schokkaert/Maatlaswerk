@@ -120,6 +120,6 @@ if ($heroMedia !== null) {
 	</main>
 </div>
 <?php maatlas_site_render_public_runtime_settings($settings); ?>
-<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260330-10"></script>
+<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-1"></script>
 </body>
 </html>

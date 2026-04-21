@@ -43,7 +43,14 @@
   ];
   var legalLinks = [
     { href: "/privacy/", label: "Privacyverklaring" },
-    { href: "/cookies/", label: "Cookiebeleid" }
+    { href: "/cookies/", label: "Cookiebeleid" },
+    { href: "https://www.forstersystems.be", label: "Forster Systems", external: true },
+    {
+      href: "https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken",
+      label: "Dealerpagina",
+      external: true
+    },
+    { href: "/admin/", label: "Admin" }
   ];
   var socialLinks = [
     {
@@ -112,7 +119,15 @@
     '<div class="maatlas-shell-footer-legal">' +
     legalLinks
       .map(function (link) {
-        return '<a class="maatlas-shell-legal-link" href="' + link.href + '">' + link.label + "</a>";
+        return (
+          '<a class="maatlas-shell-legal-link" href="' +
+          link.href +
+          '"' +
+          (link.external ? ' target="_blank" rel="noopener noreferrer"' : "") +
+          ">" +
+          link.label +
+          "</a>"
+        );
       })
       .join("") +
     "</div>" +

@@ -108,7 +108,7 @@ $primaryCaption = $primaryMedia !== null ? trim((string) ($primaryMedia['title']
 	</main>
 </div>
 <?php maatlas_site_render_public_runtime_settings($settings); ?>
-<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260330-11"></script>
+<script src="/assets/themes/bluehost-blueprint/site-shell.js?v=20260421-1"></script>
 <script>
 (function () {
   var gallery = document.querySelector('.maatlas-service-detail-gallery');

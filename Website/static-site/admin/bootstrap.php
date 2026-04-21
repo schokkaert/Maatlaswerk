@@ -1612,6 +1612,13 @@ function maatlas_admin_render_public_shell_footer(): void
 			<?php if ($vatNumber !== ''): ?>
 			<p>BTW: <?= maatlas_admin_h($vatNumber); ?></p>
 			<?php endif; ?>
+			<div class="maatlas-shell-footer-legal">
+				<a class="maatlas-shell-legal-link" href="/privacy/">Privacyverklaring</a>
+				<a class="maatlas-shell-legal-link" href="/cookies/">Cookiebeleid</a>
+				<a class="maatlas-shell-legal-link" href="https://www.forstersystems.be" target="_blank" rel="noopener noreferrer">Forster Systems</a>
+				<a class="maatlas-shell-legal-link" href="https://www.forstersystems.be/dealers/binnenschrijnwerk-buitenschrijnwerk-9690-kluisbergen/ws-maatlaswerken" target="_blank" rel="noopener noreferrer">Dealerpagina</a>
+				<a class="maatlas-shell-legal-link" href="/admin/">Admin</a>
+			</div>
 		</div>
 		<nav class="maatlas-shell-footer-nav" aria-label="Footer navigatie">
 			<?php foreach (maatlas_admin_public_navigation() as $link): ?>
